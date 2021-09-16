@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+
+    <async-sidenav-menu *ngIf="currentUser" [currentUser]="currentUser"></async-sidenav-menu>
+    <async-sidenav-list></async-sidenav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span><async-logo></async-logo></span>
+        <span class="spacer"></span>
+        <a *ngIf="!deviceXs" mat-button (click)="signOut()"><mat-icon>power_settings_new</mat-icon>Sign out</a>
+      </mat-toolbar-row>
+  
+      <mat-toolbar-row *ngIf="deviceXs">
+        <span class="spacer"></span>
+        <a mat-button (click)="signOut()"><mat-icon>power_settings_new</mat-icon>Sign out</a>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+
+    <!-- Add Content Here -->
+    <div id="page-wrap">
+      <main id="content-wrap">
+        <router-outlet></router-outlet>
+      </main>
+      <div id="footer-wrap">
+        <async-footer></async-footer>
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

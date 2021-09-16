@@ -1,0 +1,128 @@
+<div class="breadcrumb-wrap">
+  <ul class="breadcrumb">
+    <li>
+      <a [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a>
+    </li>
+    <li>profile</li>
+  </ul>
+</div>
+
+<section>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem" fxLayoutAlign="space-between start">
+      <mat-card class="profile" *ngIf="user">
+          
+        <mat-card-header>
+          <div mat-card-avatar class="card-img">
+            <img mat-card-image [src]="imagePath">
+          </div>
+          <mat-card-title>Profile Information</mat-card-title>
+          <mat-card-subtitle>{{user.firstname | titlecase}} {{user.lastname | titlecase}}</mat-card-subtitle>
+        </mat-card-header>
+          
+  
+          <mat-card-content>
+              <!-- <div class="mat-title">Update Information</div> -->
+  
+              <section>
+                  <div class="lable">
+                      <div class="mat-subheading-1">Current Profile</div>
+                      <div>
+                          <mat-form-field>
+                            <mat-label>First name</mat-label>
+                            <input matInput value="{{user.firstname | titlecase}}" disabled>
+                          </mat-form-field>
+                        
+                          <mat-form-field>
+                            <mat-label>Last name</mat-label>
+                            <input matInput value="{{user.lastname | titlecase}}" disabled>
+                          </mat-form-field>
+  
+                          <mat-form-field>
+                              <mat-label>Email address</mat-label>
+                              <input matInput value="{{user.email | lowercase}}"  disabled>
+                          </mat-form-field>
+  
+                          <mat-form-field>
+                              <mat-label>Phone number</mat-label>
+                              <input matInput value="{{user.phone}}"  disabled>
+                          </mat-form-field>
+  
+                          <mat-form-field>
+                            <mat-label>About yourself</mat-label>
+                            <textarea  matInput value="{{user.about | sentencecase}}" disabled></textarea >
+                        </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="field">
+                      <div class="mat-subheading-1">Update Profile</div>
+                      <form [formGroup]="profileForm" (ngSubmit)="onSubmit(profileForm.value)">
+                          <mat-form-field>
+                            <mat-label>First name</mat-label>
+                            <input matInput formControlName="firstname">
+                            <mat-error *ngIf=" profileForm.get('firstname').hasError('required')">
+                              Your first name is required
+                            </mat-error>
+                            <mat-error *ngIf=" profileForm.get('firstname').hasError('pattern')">
+                              Enter a valid first name
+                            </mat-error>
+                          </mat-form-field>
+                        
+                          <mat-form-field>
+                            <mat-label>Last name</mat-label>
+                            <input matInput formControlName="lastname">
+                            <mat-error *ngIf=" profileForm.get('lastname').hasError('required')">
+                              Your last name is required
+                            </mat-error>
+                            <mat-error *ngIf=" profileForm.get('lastname').hasError('pattern')">
+                              Enter a valid last name
+                            </mat-error>
+                          </mat-form-field>
+  
+                          <mat-form-field>
+                            <mat-label>Email address</mat-label>
+                            <input matInput formControlName="email">
+                            <mat-error *ngIf=" profileForm.get('email').hasError('required')">
+                                Your email is required
+                              </mat-error>
+                              <mat-error *ngIf=" profileForm.get('email').hasError('email')">
+                                Enter a valid email
+                              </mat-error>
+                          </mat-form-field>
+  
+                          <mat-form-field>
+                            <mat-label>Phone number</mat-label>
+                            <input matInput formControlName="phone">
+                            <mat-error *ngIf=" profileForm.get('phone').hasError('required')">
+                                Your phone number is required
+                              </mat-error>
+                              <mat-error *ngIf=" profileForm.get('phone').hasError('pattern')">
+                                Enter a valid phone number
+                              </mat-error>
+                              <mat-error *ngIf=" profileForm.get('phone').hasError('maxLength')">
+                                Phone number is more than required
+                              </mat-error>
+                          </mat-form-field>
+  
+                          <mat-form-field>
+                            <mat-label>About yourself</mat-label>
+                            <input matInput #about maxlength="90" formControlName="about" placeholder="Describe how people should see you">
+                            <mat-hint align="start">We don't disclose personal profile, except you wish to</mat-hint>
+                            <mat-hint align="end">{{about.value.length}} / 90</mat-hint>
+                            <mat-error *ngIf=" profileForm.get('about').hasError('maxLength')">
+                              Enter a valid phone number
+                            </mat-error>
+                          </mat-form-field>
+
+                          <button [disabled]="profileForm.invalid" mat-flat-button color="accent">UPDATE PROFILE</button>
+                      </form>
+                  </div>
+              </section>
+          </mat-card-content>    
+      </mat-card>
+    </div>
+  
+    <!-- Delete Account -->
+    <async-delete-profile *ngIf="user" [user]="user"></async-delete-profile>
+        
+</section>
+  

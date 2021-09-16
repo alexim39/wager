@@ -1,0 +1,9 @@
+.app-loading {
+  .logo {
+    width: 90px;
+    height: 90px;
+    
+    // this way asset gets processed by webpack 
+    background: url('./assets/img/rsz_logo.jpg') center center no-repeat; 
+  }
+}

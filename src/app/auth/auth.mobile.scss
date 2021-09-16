@@ -1,0 +1,31 @@
+/* @media (max-width: 800px) {
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        height: 100%;
+       .overlay-container {
+           display: none;
+       }
+       .sign-up-container {
+            width: 50%;
+            left: 0%;
+            transform: none;
+            opacity: 1;
+            z-index: 0;
+            
+        }
+        .sign-in-container {
+            width: 50%;
+            left: 50%;
+            transform: none;
+            opacity: 1;
+            z-index: 0;
+            border-left: 1px solid #ddd;
+        }
+        .right-panel-active {
+           transform: none;
+        }
+    }
+} */

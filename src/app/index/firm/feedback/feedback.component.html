@@ -1,0 +1,115 @@
+<div class="breadcrumb-wrap">
+    <ul class="breadcrumb">
+        <li>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+        </li>
+        <li>
+        <a [routerLink]="['/firm']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">firm</a>
+        </li>
+        <li>send feedback</li>
+    </ul>
+</div>
+
+
+<section class="feedback-wrapper" fxLayout="row" fxLayoutGap="2em" fxLayout.sm="column" fxLayout.xs="column">
+    <div class="feedback-form mat-elevation-z8">
+        <div class="form-title">
+            <div class="mat-h1">Feedback form</div>
+            <small>Open a support ticket</small>
+        </div>
+            
+        <div class="form-content">
+            <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit(feedbackForm.value)">
+
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-error *ngIf=" feedbackForm.get('name').hasError('name')">
+                        Please enter a valid name
+                    </mat-error>
+                    <mat-error *ngIf="feedbackForm.get('name').hasError('required')">
+                        Your name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Email address</mat-label>
+                    <input matInput type="email" formControlName="email">
+                    <mat-error *ngIf=" feedbackForm.get('email').hasError('email')">
+                        Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="feedbackForm.get('email').hasError('required')">
+                        Your email is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>What would you like to tell us about?</mat-label>
+                    <mat-select formControlName="tellUsAbout">
+                        <mat-option value="Something that I like">Something that I like</mat-option>
+                        <mat-option value="Something that I do not like">Something that I do not like</mat-option>
+                        <mat-option value="Suggest an improvement">Suggest an improvement</mat-option>
+                        <mat-option value="Suggest a new idea">Suggest a new idea</mat-option>
+                        <mat-option value="Complain">Complain</mat-option>
+                        <mat-option value="Testimonial">Testimonial</mat-option>
+                        <mat-option value="General comments">General comments</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Tell us more. And thank you</mat-label>
+                    <textarea matInput formControlName="feedbackMsg"></textarea>
+                </mat-form-field>
+
+                <mat-slide-toggle color="accent" formControlName="reply">Would you like us to respond?</mat-slide-toggle>
+
+
+                <div class="content-footer">
+                    <button type="submit" [disabled]="feedbackForm.invalid || isSpinning" mat-flat-button color="accent">
+                        <div class="loader" *ngIf="isSpinning"></div>
+                        SUBMIT
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+        
+
+    <div class="feedback-contact mat-elevation-z8">
+
+        <div class="contact-title">
+            <div class="mat-h1">Other support channels</div>
+            <small>Support 24/7</small>
+        </div>
+
+        <div class="contact-content">
+            <p>
+                While we have put forth efforts to ensure that our users have a memorable and glitch-free experience with our platform, sometimes, you may have a feature you wish to have or even face some unexpected challenges.
+            </p>
+
+            <p>
+                Use the form to explain the type of feature or assistance you need and provide little details of your complaint, enquiry or message. 
+            </p>
+
+            <p>
+                We guarantee you round the clock support via email or Whatsapp to ensure that your needs and concerns are adequately met at all times.
+            </p>
+
+            <p>
+                Also you can use below address to reach our physical office.
+            </p>
+
+            <div class="contacts">
+                <span>
+                    <strong>Email:</strong> <a href="mailto:info@betrooki.com"> info@betrooki.com</a>
+                </span>
+                <span>
+                    <strong>Support line:</strong> 081 6469 7316
+                </span>
+                <span>
+                    <strong>Address:</strong> 54 Nkpor road, Rumuolumeni, Port Harcourt. Rivers State.
+                </span>
+            </div>
+        </div>
+    </div>
+</section>

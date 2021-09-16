@@ -1,0 +1,92 @@
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthComponent } from '../../../auth/auth.component';
+
+@Component({
+  selector: 'async-banner',
+    styles: [`
+      header {
+      background-size:cover;
+      aside {
+        background-image: linear-gradient(to left, rgba(9, 173, 151, 0.8) 26.48%, rgba(3, 61, 61, 0.8) 73.52%);
+        min-height: 770px;
+        text-align: center;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        video {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+        article {
+          margin: auto;
+          height: 80vh;
+          h1 {
+              text-align: center;        
+          }
+          h3 {
+              margin-top: -4em;
+          }
+          a {
+              margin-left: 1em;
+          }
+        }
+      }
+    }
+    /* For mobile phones: */
+    @media only screen and (max-width:500px) {
+      header {
+        margin-bottom: -3em;
+        margin-bottom: 1px;
+      }
+    }
+  `],
+  template: `
+    <section fxLayout="row" fxLayoutAlign="center center">
+      <header fxFill>
+        <aside>
+          <video autoplay muted loop poster="../../../../assets/img/bck.png">
+            <source src="../../../../assets/video/bck1.webm" type="video/webm">
+          </video>
+
+          <article fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3em">
+            <!-- Desktop -->
+            <h1 class="mat-display-1" fxHide fxShow.gt-xs>
+              Get your bets analysed, get betting codes <br> or <br> Investing your bet is an option. 
+            </h1>
+            <!-- Mobile -->
+            <h1 fxHide fxShow.lt-sm>
+              Analyse your bets, get bet codes <br> or <br> invest your bets.
+            </h1>
+
+            <h3 class="typing">
+              <async-typing></async-typing>
+            </h3>
+
+            <div class="btn">
+              <a (click)="openAuthComponent()" mat-raised-button color="accent">GET ACCOUNT</a>
+              <a mat-raised-button color="accent" href="#odd-analyser">TRY NOW FOR FREE</a>
+            </div>
+          </article>
+
+        </aside>
+      </header>
+    </section>
+  `
+})
+export class BannerComponent {
+
+  constructor(
+    public dialog: MatDialog
+  ) { }
+
+  openAuthComponent() {
+    this.dialog.open(AuthComponent);
+  }
+
+}

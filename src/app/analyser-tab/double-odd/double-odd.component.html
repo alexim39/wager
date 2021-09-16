@@ -1,0 +1,122 @@
+<section fxLayout="column" fxLayoutAlign="space-around center">
+    
+    <form fxLayout="column" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+        <div class="fields" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3em" fxLayout.xs="column" fxLayoutGap.xs="1.5em">
+            <mat-form-field fxFlex="30" fxFlex.xs="100">
+                <mat-label>Enter home team odd</mat-label>
+                <input matInput type="number" maxlength="6" formControlName="homeOdd" placeholder="Eg. 2.20">
+                <mat-error *ngIf=" form.get('homeOdd').hasError('required')">
+                    Home odd is required
+                </mat-error>
+                <mat-error *ngIf=" form.get('homeOdd').hasError('pattern')">
+                    Enter a valid odd value
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field fxFlex="30" fxFlex.xs="100">
+                <mat-label>Enter away team odd</mat-label>
+                <input matInput type="number" maxlength="6" formControlName="awayOdd" placeholder="Eg. 2.20">
+                <mat-error *ngIf=" form.get('awayOdd').hasError('required')">
+                    Away odd is required
+                </mat-error>
+                <mat-error *ngIf=" form.get('awayOdd').hasError('pattern')">
+                    Enter a valid odd value
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="buttons" fxLayoutAlign="center center">
+            <button [disabled]="form.invalid || isSpinning" fxFlex="30" fxFlex.xs="100" mat-flat-button color="primary">
+                <img *ngIf="isSpinning" src="./../../../../assets/img/spinner.gif">
+                ANALYSE
+            </button>
+        </div>
+    </form>
+</section>
+
+
+<section *ngIf="displayArea" class="view-more" fxLayout="column" fxLayoutAlign="start stretch">
+    <aside class="mat-elevation-z8">
+        <div class="first-row" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em" fxLayout.xs="column">
+
+            <div class="home-analysis" fxFlex="45" fxFlex.xs="100">
+                <mat-list>
+                    <h3 mat-subheader>HOME ANALYSIS</h3>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                            <div class="title">Winning Chances:</div> 
+                            <div class="info">{{probabilityOfHomeWin}}%</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                            <div class="title">Strength: </div>
+                            <div class="info">
+                                {{homeOddStrength}}
+                                <mat-progress-bar mode="determinate" [value]="probabilityOfHomeWin" [ngClass]="getHomeOddStrengthBar()"></mat-progress-bar>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                            <div class="title">Average Win:</div>
+                            <div class="info" fxHide fxShow.gt-md>
+                                Home with {{probabilityOfHomeWin}}% chances will likely win the Away {{homeAverageWin}} out of 6 games
+                            </div>
+                            <div class="info" fxHide fxShow.lt-md>
+                                Home will likely win {{homeAverageWin}} out of 6 games
+                            </div>
+                        </div>
+                    </mat-list-item>
+                  </mat-list>
+            </div>
+
+            <div class="away-analysis" fxFlex="45" fxFlex.xs="100">
+                <mat-list>
+                    <h3 mat-subheader>AWAY ANALYSIS</h3>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                            <div class="title">Winning Chances:</div> 
+                            <div class="info">{{probabilityOfAwayWin}}%</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                            <div class="title">Strength: </div>
+                            <div class="info">
+                                {{awayOddStrength}}
+                                <mat-progress-bar mode="determinate" [value]="probabilityOfAwayWin" [ngClass]="getAwayOddStrengthBar()"></mat-progress-bar>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                            <div class="title">Average Win:</div>
+                            <div class="info" fxHide fxShow.gt-md>
+                                Away with {{probabilityOfAwayWin}}% chances will likely win the Home {{awayAverageWin}} out of 6 games
+                            </div>
+                            <div class="info" fxHide fxShow.lt-md>
+                                Away will likely win {{awayAverageWin}} out of 6 games
+                            </div>
+                        </div>
+                    </mat-list-item>
+                  </mat-list>
+            </div>
+
+        </div>
+
+
+        <div class="second-row">
+            <mat-list>
+                <h3 mat-subheader>BOOKMAKER'S MARGIN</h3>
+                <p>Low margin means higher profit and high margin means low profit</p>
+                <mat-list-item>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                        <div class="title">Profit margin: <span (click)="openMarginDialog()" matTooltip="Info about odd margin"><mat-icon>info</mat-icon></span></div> 
+                        <div class="info">{{profitMargin}}%</div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </aside>
+</section>

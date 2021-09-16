@@ -1,0 +1,41 @@
+<div class="container">
+	<section *ngIf="!deviceXs">
+		<!-- Desktop -->
+		<div class="form-container sign-up-container">
+			<async-signup></async-signup>
+		</div>
+		<div class="form-container sign-in-container">
+			<async-signin></async-signin>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Welcome Back!</h1>
+					<p>To keep connected with us please sign in your info</p>
+					<br>
+					<button mat-raised-button color="accent" id="signIn">SIGN IN NOW</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Hello, Friend!</h1>
+					<p>Enter your details and start journey with us</p>
+					<br>
+					<button mat-raised-button color="accent" id="signUp">SIGN UP FOR FREE</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section *ngIf="deviceXs">
+		<!-- Mobile -->
+
+		<div fxLayout.xs="column" fxLayoutGap="2rem" *ngIf="!toggle">
+			<async-signin></async-signin>
+			<button mat-button color="accent" (click)="toggleAuth()">SIGN UP FOR FREE</button>
+		</div>
+
+		<div fxLayout.xs="column" fxLayoutGap="2rem" *ngIf="toggle">
+			<async-signup></async-signup>
+			<button mat-button color="accent" (click)="toggleAuth()">SIGN IN NOW</button>
+		</div>
+	</section>
+</div>

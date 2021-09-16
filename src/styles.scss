@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; scroll-behavior: smooth; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*-- Odd Analyser Bar Colors --*/
+mat-progress-bar.w-25 .mat-progress-bar-fill::after  { width: 25%; background: linear-gradient(to right, red 0%, red 25%); }
+mat-progress-bar.w-50 .mat-progress-bar-fill::after  { width: 50%; background: linear-gradient(to right, orange 25%, orange 50%); }
+mat-progress-bar.w-75 .mat-progress-bar-fill::after  { width: 75%; background: linear-gradient(to right, #2962ff 50%, #2962ff 75%); }
+mat-progress-bar.w-100 .mat-progress-bar-fill::after { width: 100%; background: linear-gradient(to right, green 75%, green 100%); }
+
+
+// breadcrumb
+.breadcrumb-wrap {
+    ul.breadcrumb { 
+        padding: 10px 16px;
+        list-style: none;
+        font-size: 12px;
+        font-family: 'Lucida Sans Unicode', Geneva, Verdana;
+    }
+    ul.breadcrumb li {
+        display: inline;
+    }
+    ul.breadcrumb li+li:before {
+        padding: 8px;
+        color: black;
+        content: "/\00a0";
+    }
+    ul.breadcrumb li a {
+        color: #336794;
+        text-decoration: none;
+    }
+    ul.breadcrumb li a:hover {
+        color: #01447e;
+        text-decoration: none;
+    }
+}
+
+// Snackbar success
+.success { color: #55df5c; font-size: small; }
+// Snackbar error
+.error { color: #ffa8a8; font-size: small; }
+// Snackbar warn
+.warn { color: #daca3b; font-size: small; }
+
+
+// Loader
+.loader {
+    border: 3px solid #AD1457;
+    border-radius: 50%;
+    border-top: 3px solid #009688;
+    border-bottom: 3px solid #009688;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin: 0 2px;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,92 @@
+/* For tablets: */
+@media only screen and (max-width:800px) {
+
+    form {
+        mat-form-field {
+            width: 50vw;
+        }
+        p {
+            font-size: 0.9em;
+         }
+        .bar {
+            width: 50vw;
+        }
+    }
+    .view-more {
+        .first-row {
+            .home-analysis, .away-analysis, .draw-analysis  {
+                 mat-list {
+                     mat-list-item {
+                        div {
+                            font-size: 0.9em;
+                        }
+                     }
+                 }              
+            }
+        }
+        .second-row {
+            mat-list {
+                mat-list-item {
+                    div {
+                        .info {
+                            margin-top: 1.5em !important;
+                        }
+                    }
+                }
+            }
+        }
+    }   
+}
+
+/* For mobile phones: */
+@media only screen and (max-width:500px) {
+    form {
+        mat-form-field {
+            width: 70vw;
+        }
+        p {
+            font-size: 0.8em;
+         }
+        .bar {
+            width: 70vw;
+        }
+    }
+    .view-more {
+        aside {
+            .first-row {
+                padding-left: 0;
+                padding-right: 0;
+                .home-analysis, .away-analysis, .draw-analysis  {
+                    width: 100%;
+                    mat-list {
+                        mat-list-item {
+                            width: 100%;
+                            div {
+                                font-size: 0.9em;
+                                .title {
+                                    color: inherit
+                                }
+                                .info {
+                                    color: gray;
+                                    mat-progress-bar {
+                                        width: 5em;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .second-row {
+                mat-list-item {
+                    div {
+                        font-size: 0.9em;
+                        .info {
+                            margin-top: 1.3em !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

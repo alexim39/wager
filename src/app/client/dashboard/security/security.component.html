@@ -1,0 +1,67 @@
+<div class="breadcrumb-wrap">
+    <ul class="breadcrumb">
+      <li>
+        <a [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a>
+      </li>
+      <li>security</li>
+    </ul>
+</div>
+
+<section>
+  <div class="mat-h1">Security features and tips</div>
+
+  <p>Use our security guidlines and features keep your account safe and secured</p>
+
+  <mat-accordion>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          What can I do to keep my account secure?
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+          This is a summary of the content
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <p>This is the primary content of the panel.</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Does Betrooki use secure browsing (HTTPS)?
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+          This is a summary of the content
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <p>This is the primary content of the panel.</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          What is a one-time password and how do I get one?
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+          This is a summary of the content
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <p>This is the primary content of the panel.</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          What happens if I forget to sign out my account?
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+</section>

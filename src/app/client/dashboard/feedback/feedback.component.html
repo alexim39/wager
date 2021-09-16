@@ -1,0 +1,89 @@
+<div class="breadcrumb-wrap">
+    <ul class="breadcrumb">
+      <li>
+        <a [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a>
+      </li>
+      <li>feedback</li>
+    </ul>
+</div>
+
+<section class="feedbackContainerWrapper" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="2em">
+    <div class="feedbackContainer">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Feedback</mat-card-title>
+                <mat-card-subtitle>Open a Support Ticket</mat-card-subtitle>
+            </mat-card-header>
+                    
+            <mat-card-content>
+                <form [formGroup] = "feedbackForm" (ngSubmit) = "onSubmit(feedbackForm.value)">
+                    <mat-form-field>
+                        <mat-label>What would you like to tell us about?</mat-label>
+                        <mat-select formControlName="tellUsAbout">
+                            <mat-option value="Something that I like">Something that I like</mat-option>
+                            <mat-option value="Something that I do not like">Something that I do not like</mat-option>
+                            <mat-option value="Suggest an improvement">Suggest an improvement</mat-option>
+                            <mat-option value="Suggest a new idea">Suggest a new idea</mat-option>
+                            <mat-option value="Complain">Complain</mat-option>
+                            <mat-option value="Testimonial">Testimonial</mat-option>
+                            <mat-option value="General comments">General comments</mat-option>
+                        </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                        <mat-label>Tell us more. And thank you</mat-label>
+                        <textarea matInput formControlName="feedbackMsg"></textarea>
+                        </mat-form-field>
+
+                        <mat-slide-toggle color="accent" formControlName="reply">Would you like us to respond?</mat-slide-toggle>
+
+                    <mat-card-footer>
+                        <button [disabled]="feedbackForm.invalid || isSpinning" mat-flat-button color="accent">
+                            <div class="loader" *ngIf="isSpinning"></div>
+                            SUBMIT
+                        </button>
+                    </mat-card-footer>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="feedbackContainer">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Other Support Channels</mat-card-title>
+                <mat-card-subtitle>Support 24/7</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <p>
+                    While we have put forth efforts to ensure that our clients have a memorable and glitch-free experience with our platform, sometimes, you may face some unexpected challenges. 
+                    If you do, don’t panic. 
+                </p>
+
+                <p>
+                    Open a support ticket using the ticket form and explain the type of assistance you need and provide details of your complaint or enquiry. 
+                </p>
+
+                <p>
+                    We guarantee you round the clock support via email or Whatsapp to ensure that your needs and concerns are adequately met at all times.
+                </p>
+
+                <p>
+                    Also you can use below address to reach our physical office.
+                </p>
+
+                <div>
+                    <span>
+                        <strong>Email:</strong> <a href="mailto:info@betrooki.com"> info@betrooki.com</a>
+                    </span><br>
+                    <span>
+                        <strong>Support line:</strong> 08080386208, 08164697316
+                    </span><br>
+                    <span>
+                        <strong>Address:</strong> 54 Nkpor road, Rumuolumeni, Port Harcourt. Rivers State.
+                    </span><br>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</section>

@@ -1,0 +1,72 @@
+form {
+    margin: 3em 0;
+    mat-form-field {
+        width: 30vw;
+    }
+    p {
+       font-size: 1em;
+    }
+    .bar {
+        width: 30vw;
+    }
+}
+
+mat-slide-toggle {
+    margin-bottom: 1em;
+}
+
+.view-more {
+    margin: 3em;
+    aside {
+       padding: 1em;
+       .first-row {
+           .home-analysis, .away-analysis, .draw-analysis  {
+                mat-list {
+                    mat-list-item {
+                        border-bottom: 1px solid #eee;
+                        width: 100%;
+                        padding: 0.8em 0;
+                        .title {
+                            color: inherit
+                        }
+                        .info {
+                            color: gray;
+                            mat-progress-bar {
+                                width: 8em;
+                            }
+                        }
+                    }
+                }              
+           }
+        }
+        .second-row {
+            mat-list {
+                padding-bottom: 1em;
+                p {
+                    padding-left: 1.1em;
+                    font-size: 0.8em;
+                    color: gray;
+                }
+                mat-list-item {
+                    div {
+                        .title {
+                            span {
+                                
+                                mat-icon {
+                                    font-size: 1.3em;
+                                    color: rgb(133, 133, 24);
+                                    margin-top: 1em;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .info {
+                            margin-top: 1.5em;
+                            color: gray;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+@media (max-width: 800px) {
+    section {
+        .profile {
+            width: auto;
+            padding: 3rem;
+            mat-card-content {
+                section {
+                    .lable {
+                        display: none;
+                    }
+                    .field {
+                        width: 100%;
+                        button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+        .bank {
+            width: auto;
+            margin-top: 1rem;
+            margin-left: 0;
+        }
+        .delete-profile {
+            width: auto;
+        }
+    }
+}

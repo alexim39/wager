@@ -1,0 +1,71 @@
+<section fxLayout="column" fxLayoutAlign="space-around center">
+    <form>
+        <mat-form-field>
+          <mat-label>Enter Odd Value</mat-label>
+          <input matInput autofocus #oddValue (keyup)="getOddValue(+oddValue.value)" type="number" maxlength="6" placeholder="Eg. 2.20">
+        </mat-form-field>
+    
+        <p *ngIf="impliedProbabilityValue">You have {{impliedProbabilityValue}}% chances of winning with this odd</p>
+        <div *ngIf="impliedProbabilityValue" class="bar">
+            <mat-progress-bar mode="determinate" [value]="impliedProbabilityValue" [ngClass]="getProgressBarWidth()"></mat-progress-bar>
+        </div>
+    </form>
+    
+    <mat-slide-toggle color="accent" *ngIf="impliedProbabilityValue" (click)="onViewMoreClick()">VIEW MORE ANALYSIS</mat-slide-toggle>
+</section>
+
+<section class="view-more" *ngIf="moreViewStatus" fxLayout="column" fxLayoutAlign="start stretch">
+
+
+  <aside class="mat-elevation-z8">
+    <div class="first-row" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em" fxLayout.xs="column">
+
+        <div class="home-analysis" fxFlex="100">
+            <mat-list>
+              <h3 mat-subheader>MORE ODD ANALYSIS</h3>
+                <mat-list-item>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                        <div class="title">Winning Chances:</div> 
+                        <div class="info">{{impliedProbabilityValue}}%</div>
+                    </div>
+                </mat-list-item>
+                <mat-list-item>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                        <div class="title">Strength: </div>
+                        <div class="info">
+                            {{getOddStrength()}}
+                            <mat-progress-bar mode="determinate" [value]="impliedProbabilityValue" [ngClass]="getProgressBarWidth()"></mat-progress-bar>
+                        </div>
+                    </div>
+                </mat-list-item>
+                <!-- <mat-list-item>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap=" 1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                        <div class="title">Average Win:</div>
+                        <div class="info" fxHide fxShow.gt-md>
+                          A team with {{impliedProbabilityValue}}% chances will  likely win a team with <strong>2.0 odd</strong> {{averageWin}} out of 5 games
+                        </div>
+                        <div class="info" fxHide fxShow.lt-md>
+                            This odd will likely win {{averageWin}} out of 5 games
+                        </div>
+                    </div>
+                </mat-list-item> -->
+              </mat-list>
+        </div>
+
+    </div>
+
+
+    <!-- <div class="second-row">
+        <mat-list>
+            <h3 mat-subheader>BOOKMAKER'S MARGIN</h3>
+            <p>Low margin means higher profit and high margin means low profit</p>
+            <mat-list-item>
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1em" fxLayoutAlign.xs="start stretch" fxLayoutGap.xs="0.4em">
+                    <div class="title">Profit margin: <span (click)="openMarginDialog()" matTooltip="Info about odd margin"><mat-icon>info</mat-icon></span></div> 
+                    <div class="info">{{profitMargin}}%</div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </div> -->
+  </aside>
+</section>

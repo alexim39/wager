@@ -1,0 +1,35 @@
+section{
+    //background-color:#eee; 
+        mat-card {
+            margin: 6rem 0;
+            padding: 1.8rem 1.5rem;
+            width: 25%;
+            color: grey;
+            mat-card-content {
+                .sucess {
+                    color: rgb(12, 88, 12);
+                    font-size: 15px;
+                    a {
+                        display: inline-block;
+                        text-decoration: underline;
+                        font-weight: bold;
+                        color: inherit
+                    }
+                    a:hover {
+                        text-decoration: none;
+                    }
+                }
+                .error {
+                    color: rgb(187, 46, 46);
+                    font-size: 15px;
+                    a {
+                        display: block;
+                        margin-top: 9px;
+                        color: rgb(111, 0, 255);
+                        cursor: pointer;
+                    }
+                }
+
+            }
+        }
+}

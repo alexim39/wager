@@ -1,0 +1,56 @@
+
+form {
+    padding: 1em 0;
+    p {
+        font-size: 0.8em;
+        color: gray;
+        text-align: center;
+        margin-top: -1.5em;
+    }
+    mat-form-field {
+        width: 30%;
+    }
+    button {
+        margin-left: 2em;
+    }
+}
+.second-row {
+    aside {
+        .home-analysis, .away-analysis, .draw-analysis  {
+            mat-list {
+                padding-bottom: 1em;
+                p {
+                    padding-left: 1.1em;
+                    font-size: 0.8em;
+                    color: gray;
+                }
+                mat-list-item {
+                    border-bottom: 1px solid #eee;
+                    width: 100%;
+                    padding: 0.8em 0;
+                    div {
+                        .title {
+                            color: inherit;
+                            span {
+                                mat-icon {
+                                    font-size: 1em;
+                                    color: rgb(133, 133, 24);
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .info {
+                            color: gray;
+                            mat-progress-bar {
+                                width: 8em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        mat-slide-toggle {
+            padding-left: 1em;
+        }
+    }
+}
