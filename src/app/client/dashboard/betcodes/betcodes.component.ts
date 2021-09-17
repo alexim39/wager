@@ -32,16 +32,16 @@ import { ServerResponse } from 'src/app/common/server/response.interface';
           margin-bottom: -0.6em;
           border: 1px solid #ccc;
         }
-        /* .won {
-          color: green !important;
-        }
-        .pending {
-          color: black !important;
-        }
-        .losed {
-          color: red !important;
-        } */
-      }      
+      }  
+      .won {
+        color: #32cd32;
+      }
+      .lose {
+        color: red;
+      }
+      .expired {
+        text-decoration: line-through;
+      }     
     }
     .no-subscription {
         text-align: center;
@@ -132,10 +132,7 @@ import { ServerResponse } from 'src/app/common/server/response.interface';
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row [ngClass]="{ 
-            'won': wonBet(bet.outcome), 
-            'pending': pendingBet(bet.outcome), 
-            'losed': losedBet(bet.outcome) }" *matRowDef="let bet; columns: displayedColumns;"></tr>
+          <tr mat-row [ngClass]="{ 'won': wonBet(bet.outcome), 'lose': losedBet(bet.outcome), 'expired': expiredBet(bet.status) }" *matRowDef="let bet; columns: displayedColumns;"></tr>
         </table>
         <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </section>
@@ -222,14 +219,6 @@ export class BetcodesComponent implements OnInit, OnDestroy {
   }
 
   wonBet(outcome: string): boolean {
-    if (outcome === 'pending') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  pendingBet(outcome: string): boolean {
     if (outcome === 'won') {
       return true;
     } else {
@@ -238,7 +227,16 @@ export class BetcodesComponent implements OnInit, OnDestroy {
   }
 
   losedBet(outcome: string): boolean {
-    if (outcome === 'losed') {
+    if (outcome === 'lose') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  expiredBet(status: string): boolean {
+    console.log(status)
+    if (status === 'Expired') {
       return true;
     } else {
       return false;

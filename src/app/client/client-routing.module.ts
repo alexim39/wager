@@ -8,6 +8,7 @@ import { RegularMemberUpdateComponent } from './dashboard/betcodes/uploader/regu
 import { UploaderComponent } from './dashboard/betcodes/uploader/uploader.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FeedbackComponent } from './dashboard/feedback/feedback.component';
+import { YearlyGraphComponent } from './dashboard/home/box-menu/yearly-graph/yearly-graph.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { ProfileDetailsComponent } from './dashboard/profile/profile-details/profile-details.component';
 import { PasswordComponent } from './dashboard/security/password/password.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
         ]
       },
       { path: 'feedback', component: FeedbackComponent, data: {title: 'User feedback'} },
+      { path: 'yearly-progress-graph', component: YearlyGraphComponent, data: {title: 'Weekly prediction yearly graph'} },
     ]
   }
 ];

@@ -9,12 +9,15 @@ import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/core/user.service';
 import { BoxMenuService } from './box-menu.service';
 import { MonthlyProgressComponent } from './monthly-progress/monthly-progress.component';
+import { YearlyGraphComponent } from './yearly-graph/yearly-graph.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
   declarations: [
     BoxMenuComponent,
     MonthlyProgressComponent,
+    YearlyGraphComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +25,8 @@ import { MonthlyProgressComponent } from './monthly-progress/monthly-progress.co
     FlexLayoutModule,
     MaterialModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    ChartsModule
   ],
   exports: [BoxMenuComponent],
   providers: [UserService, BoxMenuService]
