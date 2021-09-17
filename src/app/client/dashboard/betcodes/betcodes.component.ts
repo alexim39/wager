@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserInterface, UserService } from 'src/app/core/user.service';
 import { ServerResponse } from 'src/app/common/server/response.interface';
+import { formatDate } from "@angular/common";
 
 @Component({
   selector: 'async-betcodes',
@@ -31,6 +32,12 @@ import { ServerResponse } from 'src/app/common/server/response.interface';
           border-radius: 50%;
           margin-bottom: -0.6em;
           border: 1px solid #ccc;
+        }
+        td {
+          small {
+            display: block;
+            font-size: 0.6em;
+          }
         }
       }  
       .won {
@@ -118,7 +125,10 @@ import { ServerResponse } from 'src/app/common/server/response.interface';
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> STATUS </th>
-            <td mat-cell *matCellDef="let bet"> {{bet.status | sentencecase}} </td>
+            <td mat-cell *matCellDef="let bet"> 
+              {{bet.status | sentencecase}}
+              <small>{{getStatus(bet)}} </small>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="outcome">
@@ -235,11 +245,26 @@ export class BetcodesComponent implements OnInit, OnDestroy {
   }
 
   expiredBet(status: string): boolean {
-    console.log(status)
     if (status === 'Expired') {
       return true;
     } else {
       return false;
+    }
+  }
+
+  getStatus(bet: BetcodesInterface): string {
+    const dateFormat = 'MMM d, y';
+    //const timeFormat = 'h:mm a';
+    const locale = 'en-US';
+
+    // check if its expired
+    if (bet.status === 'Expired') {
+      return `Expired on ${formatDate(new Date(bet.endDate), dateFormat, locale)}`;
+    }
+    if (bet.status === 'Not started') {
+      return `Starts on ${formatDate(new Date(bet.startDate), dateFormat, locale)} by ${bet.startTime}`;
+    } else {
+      return null;
     }
   }
 

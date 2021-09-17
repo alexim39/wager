@@ -75,7 +75,7 @@ import { MonthlyProgressClass } from './monthly-progress.class';
         <span class="other-outcome"> <span fxHide fxShow.gt-xs>|</span> {{monthlyOtherOutcomes}}% <span fxHide fxShow.gt-sm>Others</span> (Pending)</span> 
       </mat-card-content>
       <mat-card-footer fxLayout="column" fxLayoutAlign="center center">
-        Betcodes percentage status as at {{currentMonth}}
+        Betcodes percentage status for {{currentMonth}}
         <a [routerLink]="['/dashboard/yearly-progress-graph']" mat-stroked-button><small>View year</small></a>
       </mat-card-footer>
     </mat-card>
