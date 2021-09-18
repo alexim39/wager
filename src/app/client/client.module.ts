@@ -19,6 +19,7 @@ import { PipesModule } from '../common/pipes/pipes.module';
 import { FeedbackModule } from './dashboard/feedback/feedback.module';
 import { BoxMenuModule } from './dashboard/home/box-menu/box-menu.module';
 import { BetcodesModule } from './dashboard/betcodes/betcodes.module';
+import { UserProfileModule } from './dashboard/user-profile/user-profile.module';
 
 
 @NgModule({
@@ -29,7 +30,6 @@ import { BetcodesModule } from './dashboard/betcodes/betcodes.module';
     HomeComponent,
     AccountActivationComponent,
     SystemPredictionComponent,
-    
   ],
   imports: [
     CommonModule,
@@ -46,6 +46,7 @@ import { BetcodesModule } from './dashboard/betcodes/betcodes.module';
     FeedbackModule,
     BoxMenuModule,
     BetcodesModule,
+    UserProfileModule
   ],
   providers: []
 })

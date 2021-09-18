@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BetcodesInterface, BetcodesService } from './betcodes.service';
 import { Subscription } from 'rxjs';
@@ -37,6 +37,20 @@ import { formatDate } from "@angular/common";
           small {
             display: block;
             font-size: 0.6em;
+          }
+          .clickable {
+            cursor: pointer;
+          }
+          .profile-img {
+            display: block;
+            margin-top: 3px;
+            margin-left: 10px;
+          }
+          .profile-name{
+            display: block;
+            padding-top: 0.5em;
+            font-size: 0.8em;
+            color: gray;
           }
         }
       }  
@@ -115,7 +129,10 @@ import { formatDate } from "@angular/common";
 
           <ng-container matColumnDef="code">
             <th mat-header-cell *matHeaderCellDef> CODE </th>
-            <td mat-cell *matCellDef="let bet"> {{bet.code}} </td>
+            <td mat-cell *matCellDef="let bet"> 
+              {{bet.code}}
+              <!-- <span class="clickable" matTooltip="View games in code"> {{bet.code}} </span> -->
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="odd">
@@ -137,14 +154,22 @@ import { formatDate } from "@angular/common";
           </ng-container>
 
           <ng-container matColumnDef="createDate">
-            <th mat-header-cell *matHeaderCellDef> UPLOAD DATE </th>
+            <th mat-header-cell *matHeaderCellDef> POST DATE </th>
             <td mat-cell *matCellDef="let bet"> {{bet.createDate | date}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="owner">
+            <th mat-header-cell *matHeaderCellDef> OWNER </th>
+            <td matTooltip="View {{bet.creator.lastname | titlecase}}'s profile" (click)="loadUserProfile(bet.creator)" mat-cell *matCellDef="let bet"> 
+              <img class="profile-img clickable" [src]="profileImg"/>
+              <div fxHide fxShow.gt-sm class="profile-name clickable">{{bet.creator.lastname | titlecase}} {{bet.creator.firstname | titlecase}}</div>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row [ngClass]="{ 'won': wonBet(bet.outcome), 'lose': losedBet(bet.outcome), 'expired': expiredBet(bet.status) }" *matRowDef="let bet; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[20, 45, 60, 100]"></mat-paginator>
       </section>
     </aside>
 
@@ -162,8 +187,9 @@ export class BetcodesComponent implements OnInit, OnDestroy {
   user: UserInterface;
   betcodes: MatTableDataSource<BetcodesInterface>;
   bookmakerLogo: string = "./assets/img/bet9ja.png";
+  profileImg: string = "./assets/img/profile.jpg";
 
-  displayedColumns: string[] = ['bookmaker', 'code', 'odd', 'status', 'outcome', 'createDate'];
+  displayedColumns: string[] = ['bookmaker', 'code', 'odd', 'status', 'outcome', 'createDate', 'owner'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -174,6 +200,7 @@ export class BetcodesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public betcodesService: BetcodesService,
     private userService: UserService,
+    private router: Router,
   ) { 
     this.titleService.setTitle(this.route.snapshot.data['title']);
   }
@@ -262,10 +289,15 @@ export class BetcodesComponent implements OnInit, OnDestroy {
       return `Expired on ${formatDate(new Date(bet.endDate), dateFormat, locale)}`;
     }
     if (bet.status === 'Not started') {
-      return `Starts on ${formatDate(new Date(bet.startDate), dateFormat, locale)} by ${bet.startTime}`;
+      return `Starting on ${formatDate(new Date(bet.startDate), dateFormat, locale)} by ${bet.startTime}`;
     } else {
       return null;
     }
+  }
+
+  loadUserProfile(user: UserInterface) {
+    // redirect to dashboard
+    this.router.navigate(['/dashboard/'+user.username]);
   }
 
   ngOnDestroy() {

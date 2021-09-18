@@ -16,6 +16,7 @@ export interface UserInterface {
     // other members
     about?: string;
     phone?: string;
+    username: string;
 }
 
 const httpOptions = {

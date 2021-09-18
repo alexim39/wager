@@ -53,10 +53,21 @@ export class BetcodesService {
   }
 
 
-  // Get user Investment Details
+  // Get all betcodes
   betcodes(): Observable<ServerResponse> {
     this.showSpinner.next(true);
     return this.http.get<ServerResponse>(`${this.API_DOMAIN}/api/betcodes`, httpOptions)
+    .pipe(
+      retry(2),
+      tap(response => this.showSpinner.next(false), error => this.showSpinner.next(false)),
+      catchError(this.handleError)
+    );
+  }
+
+  // Get a user betcodes
+  getUserBetcodes(userId: string): Observable<ServerResponse> {
+    this.showSpinner.next(true);
+    return this.http.get<ServerResponse>(`${this.API_DOMAIN}/api/betcodes/${userId}`, httpOptions)
     .pipe(
       retry(2),
       tap(response => this.showSpinner.next(false), error => this.showSpinner.next(false)),
@@ -112,7 +123,7 @@ export class BetcodesService {
         // check if game is starting today
         if (startDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
             // Date equals today's date
-            betcode['status'] = 'Starts today';
+            betcode['status'] = 'Starting today';
             bc.push(betcode);
         }
         if (startDate < todaysDate && endDate < todaysDate) {

@@ -23,7 +23,10 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
           <span mat-line>System prediction</span>
         </a>
         <a mat-list-item (click)="toggle()"  [routerLink]="['/dashboard/betcodes']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
-          <span mat-line>Weekly prediction</span>
+          <span mat-line>Betcodes</span>
+        </a>
+        <a mat-list-item (click)="toggle()"  [routerLink]="['/dashboard/betcodes-mgt']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
+          <span mat-line>Share betcode</span>
         </a>
       </mat-nav-list>
 

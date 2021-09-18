@@ -33,8 +33,8 @@ import { Title } from '@angular/platform-browser';
         <li>
           <a [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a>
         </li>
-        <!-- <li>My subscriptions</li> -->
-        <li>code management</li>
+        <li>Game predictions</li>
+        <li>betcodes managament</li>
       </ul>
     </div>
 
@@ -43,10 +43,10 @@ import { Title } from '@angular/platform-browser';
         <!-- <mat-card> -->
           <h1>Menu</h1>
 
-          <a mat-list-item [routerLink]="['/dashboard/cd']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
+          <a mat-list-item [routerLink]="['/dashboard/betcodes-mgt']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
             <span mat-line>CODE UPLOAD</span>
           </a>
-          <a mat-list-item [routerLink]="['/dashboard/cd/rmu']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
+          <a mat-list-item [routerLink]="['/dashboard/betcodes-mgt/update']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
             <span mat-line>CODE UPDATE</span>
           </a>
         <!-- </mat-card> -->

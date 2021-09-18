@@ -17,6 +17,9 @@ import { FormResetterService } from 'src/app/core/form-resetter.service';
         text-align: center;
         font-weight: bold;
         color: orange;
+        a {
+          text-decoration: none;
+        }
       }
       mat-card {
         padding: 3em;
@@ -30,12 +33,12 @@ import { FormResetterService } from 'src/app/core/form-resetter.service';
   `],
   template: `
     <section *ngIf="!isActive">
-      <p>Your account is not yet activated. Activate to continue</p>
+    <p>Your account is not yet activated. <a  [routerLink]="['/dashboard']" routerLinkActive="active">Activate to continue</a></p>
     </section>
 
     <section *ngIf="isActive">
       <mat-card>
-        <h1>Bet Code Upload Form</h1>
+        <h1>Betcode Upload Form</h1>
         <form [formGroup]="codeUploadForm" (ngSubmit)="onSubmit(codeUploadForm.value)" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em">
 
           <mat-form-field>

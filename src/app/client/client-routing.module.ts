@@ -14,6 +14,7 @@ import { ProfileDetailsComponent } from './dashboard/profile/profile-details/pro
 import { PasswordComponent } from './dashboard/security/password/password.component';
 import { SecurityComponent } from './dashboard/security/security.component';
 import { SystemPredictionComponent } from './dashboard/system-prediction/system-prediction.component';
+import { UserProfileComponent } from './dashboard/user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -24,10 +25,10 @@ const routes: Routes = [
         children: [ { path: '', component: TabComponent } ]
       },
       { path: 'betcodes', component: BetcodesComponent, data: {title: 'Weekly prediction betcodes'} },
-      { path: 'cd', component: UploaderComponent, data: {title: 'Upload weekly prediction betcodes'},
+      { path: 'betcodes-mgt', component: UploaderComponent, data: {title: 'Betcode management page'},
         children: [
           { path: '', component: RegularMemberFormComponent },
-          { path: 'rmu', component: RegularMemberUpdateComponent, data: {title: 'Regular member code Update'} },
+          { path: 'update', component: RegularMemberUpdateComponent, data: {title: 'Regular member code Update'} },
         ]
       },
       { path: 'profile', component: ProfileDetailsComponent, data: {title: 'User profile details'} },
@@ -39,6 +40,7 @@ const routes: Routes = [
       },
       { path: 'feedback', component: FeedbackComponent, data: {title: 'User feedback'} },
       { path: 'yearly-progress-graph', component: YearlyGraphComponent, data: {title: 'Weekly prediction yearly graph'} },
+      { path: ':username', component: UserProfileComponent, data: {title: 'User profile page'} },
     ]
   }
 ];
