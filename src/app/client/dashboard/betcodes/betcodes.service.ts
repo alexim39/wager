@@ -106,41 +106,41 @@ export class BetcodesService {
   betcodesStatus(betcodes: BetcodesInterface[])  {
       const bc: BetcodesInterface[] = [];
     /* 
-        game starting today
-        game have ended
-        game starting in 4 days
+      game starting today
+      game have ended
+      game starting in 4 days
     */
 
     // get start date
     betcodes.forEach((betcode: BetcodesInterface) => {
-        //get todays date
-        const todaysDate: Date = new Date();
-        // Get start date
-        const startDate: Date = new Date(betcode.startDate);
-        // Get end date
-        const endDate: Date = new Date(betcode.endDate);
+      //get todays date
+      const todaysDate: Date = new Date();
+      // Get start date
+      const startDate: Date = new Date(betcode.startDate);
+      // Get end date
+      const endDate: Date = new Date(betcode.endDate);
 
-        // check if game is starting today
-        if (startDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
-            // Date equals today's date
-            betcode['status'] = 'Starting today';
-            bc.push(betcode);
-        }
-        if (startDate < todaysDate && endDate < todaysDate) {
-            // Date equals past date
-            betcode['status'] = 'Expired';
-            bc.push(betcode);
-        }
-        if (startDate < todaysDate && endDate >= todaysDate) {
-            // Date equals past date
-            betcode['status'] = 'In progress';
-            bc.push(betcode);
-        }
-        if (startDate > todaysDate) {
-            // Date equals past date
-            betcode['status'] = 'Not started';
-            bc.push(betcode);
-        }
+      // check if game is starting today
+      if (startDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+        // Date equals today's date
+        betcode['status'] = 'Starting today';
+        bc.push(betcode);
+      }
+      if (startDate < todaysDate && endDate < todaysDate) {
+        // Date equals past date
+        betcode['status'] = 'Expired';
+        bc.push(betcode);
+      }
+      if (startDate < todaysDate && endDate >= todaysDate) {
+        // Date equals past date
+        betcode['status'] = 'In progress';
+        bc.push(betcode);
+      }
+      if (startDate > todaysDate) {
+        // Date equals past date
+        betcode['status'] = 'Not started';
+        bc.push(betcode);
+      }
         
     })
   }

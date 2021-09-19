@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-//import { UserInterface } from './../../../../common/user/user';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';

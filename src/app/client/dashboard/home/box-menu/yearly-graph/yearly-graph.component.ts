@@ -30,16 +30,16 @@ import { MonthlyProgressClass } from '../monthly-progress/monthly-progress.class
 
     <section>
       <canvas baseChart
-            height="25vh"
-            width="80vw"
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType" *ngIf="isEmptyResponse">
+        height="25vh"
+        width="80vw"
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType" *ngIf="isEmptyResponse">
       </canvas>
       <div class="isEmptyResponse" *ngIf="!isEmptyResponse">
-          No information found
+        No information found
       </div>
     </section>
   `
