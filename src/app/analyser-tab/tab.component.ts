@@ -5,9 +5,9 @@ import { Component } from '@angular/core';
   template: `
     <section class="mat-h1" id="odd-analyser">Enter Teams from Betting Sites</section>
     <mat-tab-group dynamicHeight mat-align-tabs="center">
-      <mat-tab label="Tripple Odds (Eg. 1X2)"> <div><async-tripple-odd></async-tripple-odd></div> </mat-tab>
-      <mat-tab label="Double Odds (Eg. 12 or Over/Under)"> <div><async-double-odd></async-double-odd> </div></mat-tab>
-      <mat-tab label="Single Odd"> <div><async-single-odd></async-single-odd></div> </mat-tab>
+      <mat-tab label="1X2 MARKET"> <div><async-tripple-odd></async-tripple-odd></div> </mat-tab>
+      <mat-tab label="12 OR OVER/UNDER MARKET"> <div><async-double-odd></async-double-odd> </div></mat-tab>
+      <mat-tab label="SINGLE ODD"> <div><async-single-odd></async-single-odd></div> </mat-tab>
     </mat-tab-group>
   `,
   styles: [`

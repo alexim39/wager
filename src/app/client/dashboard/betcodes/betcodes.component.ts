@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserInterface, UserService } from 'src/app/core/user.service';
 import { ServerResponse } from 'src/app/common/server/response.interface';
 import { formatDate } from "@angular/common";
+import { BetcodesClass } from './betcodes.class';
 
 @Component({
   selector: 'async-betcodes',
@@ -154,15 +155,15 @@ import { formatDate } from "@angular/common";
           </ng-container>
 
           <ng-container matColumnDef="createDate">
-            <th mat-header-cell *matHeaderCellDef> POST DATE </th>
-            <td mat-cell *matCellDef="let bet"> {{bet.createDate | date}} </td>
+            <th fxHide fxShow.gt-sm mat-header-cell *matHeaderCellDef> POST DATE </th>
+            <td fxHide fxShow.gt-sm mat-cell *matCellDef="let bet"> {{getPostDate(bet.createDate)}}<!-- {{bet.createDate | date}} --> </td>
           </ng-container>
 
           <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef> OWNER </th>
             <td matTooltip="View {{bet.creator.lastname | titlecase}}'s profile" (click)="loadUserProfile(bet.creator)" mat-cell *matCellDef="let bet"> 
               <img class="profile-img clickable" [src]="profileImg"/>
-              <div fxHide fxShow.gt-sm class="profile-name clickable">{{bet.creator.lastname | titlecase}} {{bet.creator.firstname | titlecase}}</div>
+              <div fxHide fxShow.gt-sm class="profile-name clickable">{{getOwner(bet.creator) | titlecase}}</div>
             </td>
           </ng-container>
 
@@ -181,7 +182,7 @@ import { formatDate } from "@angular/common";
     </aside> -->
   `
 })
-export class BetcodesComponent implements OnInit, OnDestroy {
+export class BetcodesComponent extends BetcodesClass implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
   user: UserInterface;
@@ -202,6 +203,7 @@ export class BetcodesComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private router: Router,
   ) { 
+    super();
     this.titleService.setTitle(this.route.snapshot.data['title']);
   }
 
@@ -298,6 +300,14 @@ export class BetcodesComponent implements OnInit, OnDestroy {
   loadUserProfile(user: UserInterface) {
     // redirect to dashboard
     this.router.navigate(['/dashboard/'+user.username]);
+  }
+
+  getPostDate(date: string): string {
+    return this.betcodesService.postDate(date);
+  }
+
+  getOwner(betCreator: UserInterface): string {
+    return super.betcodeOwner(betCreator, this.user._id);
   }
 
   ngOnDestroy() {

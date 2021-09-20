@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserInterface, UserService } from 'src/app/core/user.service';
+import { RaterComponent } from './rater/rater.component';
 import { UserProfileAndBetcodesInterface, UserProfileService } from './user-profile.service';
 
 @Component({
@@ -83,11 +85,6 @@ import { UserProfileAndBetcodesInterface, UserProfileService } from './user-prof
     </div>
     <div *ngIf="!(userProfileService.showSpinner | async)">
 
-      <!-- <section *ngIf="!isActive || !isEmptyResponse">
-        <p class="not-activated-account">User not found or your account is not yet activated. <a  [routerLink]="['/dashboard']" routerLinkActive="active">Activate to continue</a></p>
-      </section> -->
-
-      <!-- <section *ngIf="isActive && isEmptyResponse"> -->
       <section *ngIf="isEmptyResponse">
         <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="1em">
 
@@ -98,7 +95,8 @@ import { UserProfileAndBetcodesInterface, UserProfileService } from './user-prof
               {{foundUserProfile.about | sentencecase}}
             </p>
             <div class="btn" fxLayout="row" fxLayoutGap="1em">
-              <button mat-flat-button color="primary">FELLOW</button>
+              <button *ngIf="!isUserFollowing" mat-flat-button color="primary" (click)="follow(foundUserProfile._id)">FELLOW</button>
+              <button *ngIf="isUserFollowing" mat-flat-button color="primary" (click)="unFollow(foundUserProfile._id)">UNFELLOW</button>
               <button mat-stroked-button color="primary">MESSAGE</button>
             </div>
 
@@ -135,11 +133,11 @@ import { UserProfileAndBetcodesInterface, UserProfileService } from './user-prof
 
           </section>
 
-          <section *ngIf="userProfileAndBetcodes" fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
+          <section *ngIf="userProfileAndBetcodes && currentUser" fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
             <!-- <router-outlet></router-outlet> -->
-            <async-prediction-status [userProfileAndBetcodes]="userProfileAndBetcodes"></async-prediction-status>
+            <async-prediction-status [currentUser]="currentUser" [userProfileAndBetcodes]="userProfileAndBetcodes"></async-prediction-status>
 
-            <async-rater></async-rater>
+            <async-rater [currentUser]="currentUser" [userProfileAndBetcodes]="userProfileAndBetcodes"></async-rater>
           </section>
         </div>
       </section>
@@ -149,7 +147,10 @@ import { UserProfileAndBetcodesInterface, UserProfileService } from './user-prof
     </div>
   `
 })
-export class UserProfileComponent implements OnInit, OnDestroy {
+export class UserProfileComponent implements OnInit, OnDestroy  {
+
+  // init RaterComponent 
+  @ViewChild(RaterComponent, {static: false}) private raterComponent: RaterComponent;
 
   username: string;
   subscriptions: Subscription[] = [];
@@ -157,10 +158,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   userProfileAndBetcodes: UserProfileAndBetcodesInterface[] = [];
   foundUserProfile: UserInterface;
+  currentUser: UserInterface;
+  //followers: UserInterface[] = [];
+  isUserFollowing: boolean = false;
 
   profileImg: string = "./assets/img/profile.jpg";
 
   constructor(
+    private snackBar: MatSnackBar,
     private userService: UserService,
     private route: ActivatedRoute,
     private titleService: Title,
@@ -183,6 +188,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     // push into list
     this.subscriptions.push(
+      // get current user details from data service
+      this.userService.getUser().subscribe((user: UserInterface) => {
+        this.currentUser = user;
+      })
+    )
+
+    // push into list
+    this.subscriptions.push(
       this.route.params.subscribe((params: Params) => {
         this.username = params.username; // same as :username in route
         // push into list
@@ -195,13 +208,79 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               
               this.userProfileAndBetcodes = res.obj;
               // get user profile
-              this.foundUserProfile =this.userProfileAndBetcodes[0].creator;
+              this.foundUserProfile = this.userProfileAndBetcodes[0].creator;
+
+              // check if user has already clicked fellow button
+              this.foundUserProfile.followers.forEach((follower) => {
+                if (this.currentUser._id === follower._id) {
+                  this.isUserFollowing = true;
+                }
+              })
+
             }
           })
         )
       })
     )
   }
+
+  follow(foundUserId: string) {
+
+    const followObj = {
+      followee: foundUserId,
+      follower: this.currentUser._id
+    }
+
+    // push into list
+    this.subscriptions.push(
+      this.userProfileService.fellowUser(followObj).subscribe((res) => {
+        if (res.code === 200) {
+          this.snackBar.open(`${res.msg}`, `Close`, {
+            duration: 4000,
+            panelClass: ['success']
+          });
+
+          this.isUserFollowing = true;
+          // call ratecomponent to update number
+          this.raterComponent.addFollowers();
+        }
+      }, (error) => {
+        this.snackBar.open(`${error.error.msg}`, `Close`, {
+          duration: 4000,
+          panelClass: ['error']
+        });
+      })
+    )
+  }
+
+  unFollow(foundUserId: string) {  
+
+    const followObj = {
+      followee: foundUserId,
+      follower: this.currentUser._id
+    }
+
+    // push into list
+    this.subscriptions.push(
+      this.userProfileService.unFellowUser(followObj).subscribe((res) => {
+        if (res.code === 200) {
+          this.snackBar.open(`${res.msg}`, `Close`, {
+            duration: 4000,
+            panelClass: ['success']
+          });
+          this.isUserFollowing = false;
+          // call ratecomponent to update number
+          this.raterComponent.removeFollowers();
+        }
+      }, (error) => {
+        this.snackBar.open(`${error.error.msg}`, `Close`, {
+          duration: 4000,
+          panelClass: ['error']
+        });
+      })
+    )
+  }
+
 
   ngOnDestroy() {
     // unsubscribe list

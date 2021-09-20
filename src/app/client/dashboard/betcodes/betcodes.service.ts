@@ -4,6 +4,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { tap, catchError, retry } from 'rxjs/operators';
 import { ServerResponse } from './../../../common/server/response.interface';
 import { environment } from 'src/environments/environment';
+import { formatDate } from "@angular/common";
 
 export interface BetcodesInterface {
   _id?: string;
@@ -143,6 +144,27 @@ export class BetcodesService {
       }
         
     })
+  }
+
+  postDate(postdate: string): string {
+    const format = 'MMM d, y';
+    //const myDate = '2019-06-29';
+    const locale = 'en-US';
+
+    //get todays date
+    const todaysDate: Date = new Date();
+    // Get start date
+    const postDate: Date = new Date(postdate);
+
+    // check if post is today
+    if (postDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+      // Date equals today's date
+      return 'Today';
+    } else {
+      // return formated date
+      return formatDate(postdate, format, locale);//postdate;
+    }
+
   }
 
 }

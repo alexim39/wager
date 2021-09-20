@@ -64,6 +64,60 @@ export class UserProfileService {
     );
   }
 
+  // fellow user
+  fellowUser(fellowObj: any): Observable<ServerResponse> {
+    return this.http.post<ServerResponse>(`${this.API_DOMAIN}/api/user/fellow`, fellowObj, httpOptions)
+      .pipe(
+        //retry(2), // retry a failed request up to 2 times
+        catchError(this.handleError),
+      );
+  }
+
+  // unfellow user
+  unFellowUser(fellowObj: any): Observable<ServerResponse> {
+    return this.http.post<ServerResponse>(`${this.API_DOMAIN}/api/user/unfellow`, fellowObj, httpOptions)
+      .pipe(
+        //retry(2), // retry a failed request up to 2 times
+        catchError(this.handleError),
+      );
+  }
+
+  // add rate up user
+  addToRateUpUser(rateUpObj: any): Observable<ServerResponse> {
+    return this.http.post<ServerResponse>(`${this.API_DOMAIN}/api/user/addrateup`, rateUpObj, httpOptions)
+      .pipe(
+        //retry(2), // retry a failed request up to 2 times
+        catchError(this.handleError),
+      );
+  }
+
+  // remove rate up user
+  removeFromRateUpUser(rateUpObj: any): Observable<ServerResponse> {
+    return this.http.post<ServerResponse>(`${this.API_DOMAIN}/api/user/removerateup`, rateUpObj, httpOptions)
+      .pipe(
+        //retry(2), // retry a failed request up to 2 times
+        catchError(this.handleError),
+      );
+  }
+
+  // rate down user
+  addToRateDownUser(rateDownObj: any): Observable<ServerResponse> {
+    return this.http.post<ServerResponse>(`${this.API_DOMAIN}/api/user/addratedown`, rateDownObj, httpOptions)
+      .pipe(
+        //retry(2), // retry a failed request up to 2 times
+        catchError(this.handleError),
+      );
+  }
+
+  // remove rate down user
+  removeFromRateDownUser(rateDownObj: any): Observable<ServerResponse> {
+    return this.http.post<ServerResponse>(`${this.API_DOMAIN}/api/user/removeratedown`, rateDownObj, httpOptions)
+      .pipe(
+        //retry(2), // retry a failed request up to 2 times
+        catchError(this.handleError),
+      );
+  }
+
 
 
 }

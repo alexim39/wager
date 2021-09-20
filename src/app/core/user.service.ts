@@ -17,6 +17,9 @@ export interface UserInterface {
     about?: string;
     phone?: string;
     username: string;
+    followers?: UserInterface[];
+    ratedowns?: UserInterface[];
+    rateups?: UserInterface[];
 }
 
 const httpOptions = {

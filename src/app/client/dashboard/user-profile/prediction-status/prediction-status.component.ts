@@ -54,6 +54,7 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
   subscriptions: Subscription[] = [];
   @Input() userProfileAndBetcodes: UserProfileAndBetcodesInterface[] = [];
   foundUserProfile: UserInterface;
+  @Input() currentUser: UserInterface;
   winnings: number = 0;
   loses: number = 0;
   otheroutcomes: number = 0;
@@ -90,7 +91,7 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
     this.getUserWinLose(this.userProfileAndBetcodes)
     this.pieChartData = [this.winnings, this.loses, this.otheroutcomes];
 
-    // user
+    // found user
     this.foundUserProfile = this.userProfileAndBetcodes[0].creator;
   }
 
