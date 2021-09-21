@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EventTriggerService } from 'src/app/common/event-trigger.service';
 import { UserInterface } from 'src/app/core/user.service';
+import { ReportService } from '../report/resport.service';
 import { UserBetcodesAndProfileInterface, UserProfileService } from '../user-profile.service';
 import { RateClass } from './rater.class';
 
@@ -61,7 +64,7 @@ import { RateClass } from './rater.class';
           <mat-icon>thumb_down</mat-icon>
           <span>{{numberOfDownRate}}</span>
         </button>
-        <button mat-stroked-button color="warnX" matTooltip="Report user for abuse">
+        <button (click)="loadReportPage()" mat-stroked-button matTooltip="Report user for abuse">
           REPORT
         </button>
       </div>
@@ -87,7 +90,10 @@ export class RaterComponent extends RateClass implements OnInit {
 
   constructor(
     private snackBar: MatSnackBar,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private eventTriggerService: EventTriggerService,
+    private router: Router,
+    private reportService: ReportService
   ) { 
     super();
   }
@@ -113,16 +119,32 @@ export class RaterComponent extends RateClass implements OnInit {
     if (this.isRatedDwon) {
       this.warn = 'warn';
     }
+
+    // subscribe to service to trigger update
+    this.subscriptions.push(
+      this.eventTriggerService.invokeEvent.subscribe(trigger => {
+        if (trigger === 'add') {
+          // call method
+          this.addFollowers();
+        }
+        if (trigger === 'remove') {
+          this.premoveFollowers()
+        }
+      })
+    )
+
+    // set user in report servie to be use in report component
+    //this.reportService.setUser(this.foundUserProfile)
     
   }
 
   // called from user profile component
-  addFollowers(): void {
+  private addFollowers(): void {
     this.followers = this.followers + 1;
   }
 
   // call from user profile component
-  removeFollowers(): void {
+  premoveFollowers(): void {
     this.followers = this.followers - 1;
   }
 
@@ -150,8 +172,7 @@ export class RaterComponent extends RateClass implements OnInit {
               this.warn = null;
 
               // add to rate up
-              //super.numberOfUpRate = super.numberOfUpRate + 1;
-              //this.ngOnInit();
+              super.addRateUp();
 
             }
           }, (error) => {
@@ -179,8 +200,7 @@ export class RaterComponent extends RateClass implements OnInit {
               this.warn = null;
 
               // remove to rate up
-              //super.numberOfUpRate = super.numberOfUpRate - 1;
-              //this.ngOnInit();
+              super.removeRateUp();
 
             }
           }, (error) => {
@@ -192,7 +212,7 @@ export class RaterComponent extends RateClass implements OnInit {
         )
       }
 
-      if (this.isRatedDwon) {
+      if (this.isRatedDwon && this.warn === 'warn') {
 
         // push into list
         this.subscriptions.push(
@@ -209,8 +229,8 @@ export class RaterComponent extends RateClass implements OnInit {
               this.primary = null;
 
               // remove to rates down
-              //super.numberOfDownRate = super.numberOfDownRate - 1;
-              //this.ngOnInit();
+              //super.addRateUp();
+              super.removeRateDownAndAddUpRate();
 
 
             }
@@ -249,8 +269,7 @@ export class RaterComponent extends RateClass implements OnInit {
               this.primary = null;
 
               // add to rates down
-              //super.numberOfDownRate = super.numberOfDownRate + 1;
-              //this.ngOnInit();
+              super.addRateDown();
 
 
             }
@@ -279,8 +298,7 @@ export class RaterComponent extends RateClass implements OnInit {
               this.primary = null;
 
               // remove to rates down
-              //super.numberOfDownRate = super.numberOfDownRate - 1;
-              //this.ngOnInit();
+              super.removeRateDown();
 
 
             }
@@ -293,38 +311,40 @@ export class RaterComponent extends RateClass implements OnInit {
         )
       }
 
-      if (this.isRatedUp) {
+      if (this.isRatedUp && this.primary === 'primary') {
 
-         // push into list
-         this.subscriptions.push(
-          this.userProfileService.removeFromRateUpUser(ratingObj).subscribe((res) => {
-            if (res.code === 200) {
-              this.snackBar.open(`${res.msg}`, `Close`, {
-                duration: 4000,
-                panelClass: ['success']
-              });
-
-              this.isRatedUp = null;
-              this.isRatedDwon = null;
-              this.primary = null;
-              this.warn = null;
-
-              // remove to rate up
-              //super.numberOfUpRate = super.numberOfUpRate - 1;
-              //this.ngOnInit();
-
-            }
-          }, (error) => {
-            this.snackBar.open(`${error.error.msg}`, `Close`, {
+        // push into list
+        this.subscriptions.push(
+        this.userProfileService.removeFromRateUpUser(ratingObj).subscribe((res) => {
+          if (res.code === 200) {
+            this.snackBar.open(`${res.msg}`, `Close`, {
               duration: 4000,
-              panelClass: ['error']
+              panelClass: ['success']
             });
-          })
-        )
 
-      }
-       
+            this.isRatedUp = null;
+            this.isRatedDwon = null;
+            this.primary = null;
+            this.warn = null;
 
+            // remove to rate up
+            super.removeRateUpAndAddDownRate();
+
+          }
+        }, (error) => {
+          this.snackBar.open(`${error.error.msg}`, `Close`, {
+            duration: 4000,
+            panelClass: ['error']
+          });
+        })
+      )
+
+    }
+  }
+
+
+  loadReportPage() {
+    this.router.navigateByUrl(`dashboard/${this.foundUserProfile.username}/report`);
   }
 
 }

@@ -11,6 +11,8 @@ import { ChartsModule } from 'ng2-charts';
 import { RiskLevelComponent } from './prediction-status/risk-level/risk-level.component';
 import { SportKnowledgeComponent } from './prediction-status/sport-knowledge/sport-knowledge.component';
 import { RaterComponent } from './rater/rater.component';
+import { UserProfileHomeComponent } from './user-profile-home/user-profile-home.component';
+import { ReportComponent } from './report/report.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { RaterComponent } from './rater/rater.component';
     PredictionStatusComponent,
     RiskLevelComponent,
     SportKnowledgeComponent,
-    RaterComponent
+    RaterComponent,
+    UserProfileHomeComponent,
+    ReportComponent
   ],
   imports: [
     CommonModule,

@@ -6,20 +6,19 @@ import { ServerResponse } from './../../../common/server/response.interface';
 import { environment } from 'src/environments/environment';
 import { UserInterface } from 'src/app/core/user.service';
 
-
 export interface UserBetcodesAndProfileInterface {
-    _id: string;
-    bookmaker: string;
-    code: string;
-    createDate: string;
-    endDate: string;
-    endTime: string;
-    modifyDate: string;
-    odd: string;
-    outcome: string;
-    startDate: string;
-    startTime: string;
-    creator: UserInterface;
+  _id: string;
+  bookmaker: string;
+  code: string;
+  createDate: string;
+  endDate: string;
+  endTime: string;
+  modifyDate: string;
+  odd: string;
+  outcome: string;
+  startDate: string;
+  startTime: string;
+  creator: UserInterface;
 }
 
 const httpOptions = {
@@ -36,7 +35,17 @@ export class UserProfileService {
   private API_DOMAIN: string = environment.API_DOMAIN;
   showSpinner: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
 
+  private message = new BehaviorSubject<UserBetcodesAndProfileInterface[]>(null);
+  sharedMessage = this.message.asObservable();
+
+
   constructor(private http: HttpClient) { }
+
+  nextMessage(message: UserBetcodesAndProfileInterface[]) {
+    this.message.next(message)
+  }
+
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

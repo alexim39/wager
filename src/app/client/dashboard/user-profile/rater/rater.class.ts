@@ -64,5 +64,33 @@ export class RateClass {
         this.rating = +((wonbets.length / userBetcodes.length) * 100).toFixed(0);
     }
 
+  addRateUp(): void {
+    this.numberOfUpRate = this.numberOfUpRate + 1;
+  }
+
+  removeRateUp(): void {
+    this.numberOfUpRate = this.numberOfUpRate - 1;
+  }
+
+  addRateDown(): void {
+    this.numberOfDownRate = this.numberOfDownRate + 1;
+  }
+
+  removeRateDown(): void {
+    this.numberOfDownRate = this.numberOfDownRate - 1;
+  }
+
+   /* There is a bug for future review */
+  removeRateDownAndAddUpRate() {
+    this.numberOfDownRate = this.numberOfDownRate - 1;
+    this.numberOfUpRate = this.numberOfUpRate;
+  }
+
+  /* There is a bug for future review */
+  removeRateUpAndAddDownRate() {
+    this.numberOfUpRate = this.numberOfUpRate - 1;
+    this.numberOfDownRate = this.numberOfDownRate;
+  }
+
     
 }

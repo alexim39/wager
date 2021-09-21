@@ -3,8 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EventTriggerService } from 'src/app/common/event-trigger.service';
 import { UserInterface, UserService } from 'src/app/core/user.service';
-import { RaterComponent } from './rater/rater.component';
 import { UserBetcodesAndProfileInterface, UserProfileService } from './user-profile.service';
 
 @Component({
@@ -133,11 +133,8 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
 
           </section>
 
-          <section *ngIf="userBetcodesAndProfile && currentUser" fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
-            <!-- <router-outlet></router-outlet> -->
-            <async-prediction-status [currentUser]="currentUser" [userBetcodesAndProfile]="userBetcodesAndProfile"></async-prediction-status>
-
-            <async-rater [currentUser]="currentUser" [userBetcodesAndProfile]="userBetcodesAndProfile"></async-rater>
+          <section fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
+            <router-outlet></router-outlet>
           </section>
         </div>
       </section>
@@ -149,9 +146,6 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
 })
 export class UserProfileComponent implements OnInit, OnDestroy  {
 
-  // init RaterComponent 
-  @ViewChild(RaterComponent, {static: false}) private raterComponent: RaterComponent;
-
   username: string;
   subscriptions: Subscription[] = [];
   isEmptyResponse: Boolean;
@@ -159,7 +153,6 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
   userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
   foundUserProfile: UserInterface;
   currentUser: UserInterface;
-  //followers: UserInterface[] = [];
   isUserFollowing: boolean = false;
 
   profileImg: string = "./assets/img/profile.jpg";
@@ -169,7 +162,8 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
     private userService: UserService,
     private route: ActivatedRoute,
     private titleService: Title,
-    public userProfileService: UserProfileService
+    public userProfileService: UserProfileService,
+    private eventTriggerService: EventTriggerService
   ) { 
     this.titleService.setTitle(this.route.snapshot.data['title']);
   }
@@ -217,11 +211,16 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
                 }
               })
 
+              // share data
+              this.userProfileService.nextMessage(this.userBetcodesAndProfile);
+
             }
           })
         )
       })
     )
+
+    
   }
 
   follow(foundUserId: string) {
@@ -242,7 +241,7 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
 
           this.isUserFollowing = true;
           // call ratecomponent to update number
-          this.raterComponent.addFollowers();
+          this.eventTriggerService.callMethodFromAnotherComponent('add');
         }
       }, (error) => {
         this.snackBar.open(`${error.error.msg}`, `Close`, {
@@ -270,7 +269,7 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
           });
           this.isUserFollowing = false;
           // call ratecomponent to update number
-          this.raterComponent.removeFollowers();
+          this.eventTriggerService.callMethodFromAnotherComponent('remove');
         }
       }, (error) => {
         this.snackBar.open(`${error.error.msg}`, `Close`, {

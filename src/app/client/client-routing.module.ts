@@ -14,6 +14,8 @@ import { ProfileDetailsComponent } from './dashboard/profile/profile-details/pro
 import { PasswordComponent } from './dashboard/security/password/password.component';
 import { SecurityComponent } from './dashboard/security/security.component';
 import { SystemPredictionComponent } from './dashboard/system-prediction/system-prediction.component';
+import { ReportComponent } from './dashboard/user-profile/report/report.component';
+import { UserProfileHomeComponent } from './dashboard/user-profile/user-profile-home/user-profile-home.component';
 import { UserProfileComponent } from './dashboard/user-profile/user-profile.component';
 
 
@@ -40,7 +42,12 @@ const routes: Routes = [
       },
       { path: 'feedback', component: FeedbackComponent, data: {title: 'User feedback'} },
       { path: 'yearly-progress-graph', component: YearlyGraphComponent, data: {title: 'Weekly prediction yearly graph'} },
-      { path: ':username', component: UserProfileComponent, data: {title: 'User profile page'} },
+      { path: ':username', component: UserProfileComponent, data: {title: 'User profile page'},
+        children: [
+          { path: '', component: UserProfileHomeComponent },
+          { path: 'report', component: ReportComponent, data: {title: 'User behaviour report page'} },
+        ]
+      },
     ]
   }
 ];
