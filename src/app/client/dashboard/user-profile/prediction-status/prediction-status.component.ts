@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserInterface } from 'src/app/core/user.service';
 import { BetcodesInterface, BetcodesService } from '../../betcodes/betcodes.service';
-import { UserProfileAndBetcodesInterface, UserProfileService } from '../user-profile.service';
+import { UserBetcodesAndProfileInterface, UserProfileService } from '../user-profile.service';
 import { PredictionStatusClass } from './prediction-status.class';
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
@@ -52,7 +52,7 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
 
   // init subscriptions list
   subscriptions: Subscription[] = [];
-  @Input() userProfileAndBetcodes: UserProfileAndBetcodesInterface[] = [];
+  @Input() userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
   foundUserProfile: UserInterface;
   @Input() currentUser: UserInterface;
   winnings: number = 0;
@@ -78,7 +78,7 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
     monkeyPatchChartJsLegend();
   }
 
-  private getUserWinLose(betcodes: UserProfileAndBetcodesInterface[]) {
+  private getUserWinLose(betcodes: UserBetcodesAndProfileInterface[]) {
     // win percentage
     this.winnings = super.userWins(betcodes) * 100;
     // lose percentage
@@ -88,11 +88,11 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
   }
 
   ngOnInit(): void {
-    this.getUserWinLose(this.userProfileAndBetcodes)
+    this.getUserWinLose(this.userBetcodesAndProfile)
     this.pieChartData = [this.winnings, this.loses, this.otheroutcomes];
 
     // found user
-    this.foundUserProfile = this.userProfileAndBetcodes[0].creator;
+    this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
   }
 
 }

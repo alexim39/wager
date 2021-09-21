@@ -21,7 +21,8 @@ export class ViewPredictionClass extends TabClass  {
         const words = [
             'OVER 1.5', 
             'UNDER 4.5', 
-            //'Cat','Parrot','Iguana'
+            'OVER 2.5',
+            'BOTH TEAMS TO SCORE'
         ];
         return words[Math.floor(Math.random() * words.length)];
     }

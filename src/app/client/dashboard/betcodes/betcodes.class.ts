@@ -8,7 +8,7 @@ export class BetcodesClass {
         if (betCreator._id === currentUserId) {
             return 'your bets';
         } else {
-            return betCreator.firstname + ' ' + betCreator.lastname;
+            return betCreator.firstname /* + ' ' + betCreator.lastname */;
         }
     }
 }

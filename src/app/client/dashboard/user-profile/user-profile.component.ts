@@ -5,7 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserInterface, UserService } from 'src/app/core/user.service';
 import { RaterComponent } from './rater/rater.component';
-import { UserProfileAndBetcodesInterface, UserProfileService } from './user-profile.service';
+import { UserBetcodesAndProfileInterface, UserProfileService } from './user-profile.service';
 
 @Component({
   selector: 'async-user-profile',
@@ -133,11 +133,11 @@ import { UserProfileAndBetcodesInterface, UserProfileService } from './user-prof
 
           </section>
 
-          <section *ngIf="userProfileAndBetcodes && currentUser" fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
+          <section *ngIf="userBetcodesAndProfile && currentUser" fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
             <!-- <router-outlet></router-outlet> -->
-            <async-prediction-status [currentUser]="currentUser" [userProfileAndBetcodes]="userProfileAndBetcodes"></async-prediction-status>
+            <async-prediction-status [currentUser]="currentUser" [userBetcodesAndProfile]="userBetcodesAndProfile"></async-prediction-status>
 
-            <async-rater [currentUser]="currentUser" [userProfileAndBetcodes]="userProfileAndBetcodes"></async-rater>
+            <async-rater [currentUser]="currentUser" [userBetcodesAndProfile]="userBetcodesAndProfile"></async-rater>
           </section>
         </div>
       </section>
@@ -156,7 +156,7 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
   subscriptions: Subscription[] = [];
   isEmptyResponse: Boolean;
 
-  userProfileAndBetcodes: UserProfileAndBetcodesInterface[] = [];
+  userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
   foundUserProfile: UserInterface;
   currentUser: UserInterface;
   //followers: UserInterface[] = [];
@@ -206,9 +206,9 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
               // check empty response
               this.emptyResponse(res.obj);
               
-              this.userProfileAndBetcodes = res.obj;
+              this.userBetcodesAndProfile = res.obj;
               // get user profile
-              this.foundUserProfile = this.userProfileAndBetcodes[0].creator;
+              this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
 
               // check if user has already clicked fellow button
               this.foundUserProfile.followers.forEach((follower) => {

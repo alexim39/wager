@@ -1,12 +1,12 @@
-import { UserProfileAndBetcodesInterface } from "../user-profile.service";
+import { UserBetcodesAndProfileInterface } from "../user-profile.service";
 
 export class PredictionStatusClass {
 
     constructor() {}
 
-    userWins(betcodes: UserProfileAndBetcodesInterface[]) {
+    userWins(betcodes: UserBetcodesAndProfileInterface[]) {
         const totalBetcodes: number = betcodes.length;
-        const wonBetcodes: UserProfileAndBetcodesInterface[] = []
+        const wonBetcodes: UserBetcodesAndProfileInterface[] = []
 
         betcodes.forEach((betcode) => {
             if (betcode.outcome === 'won') {
@@ -17,9 +17,9 @@ export class PredictionStatusClass {
         return wonBetcodes.length / totalBetcodes
     }
 
-    userLose (betcodes: UserProfileAndBetcodesInterface[]) {
+    userLose (betcodes: UserBetcodesAndProfileInterface[]) {
         const totalBetcodes: number = betcodes.length;
-        const loseBetcodes: UserProfileAndBetcodesInterface[] = []
+        const loseBetcodes: UserBetcodesAndProfileInterface[] = []
 
         betcodes.forEach((betcode) => {
             if (betcode.outcome === 'lose') {
@@ -30,9 +30,9 @@ export class PredictionStatusClass {
         return loseBetcodes.length / totalBetcodes
     }
 
-    userOtherOutcomes (betcodes: UserProfileAndBetcodesInterface[]) {
+    userOtherOutcomes (betcodes: UserBetcodesAndProfileInterface[]) {
         const totalBetcodes: number = betcodes.length;
-        const otherBetcodes: UserProfileAndBetcodesInterface[] = []
+        const otherBetcodes: UserBetcodesAndProfileInterface[] = []
 
         betcodes.forEach((betcode) => {
             if (betcode.outcome !== 'won' && betcode.outcome !== 'lose') {

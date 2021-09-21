@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { UserInterface } from 'src/app/core/user.service';
-import { UserProfileAndBetcodesInterface, UserProfileService } from '../user-profile.service';
+import { UserBetcodesAndProfileInterface, UserProfileService } from '../user-profile.service';
 import { RateClass } from './rater.class';
 
 @Component({
@@ -42,7 +42,7 @@ import { RateClass } from './rater.class';
   template: `
     <section fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="space-between center" fxLayoutGap="1em">
       <div class="current-rating">
-        CURRENT RATING: 50%
+        CURRENT RATING: {{rating}}%
       </div>
 
       <div class="followers">
@@ -72,7 +72,7 @@ export class RaterComponent extends RateClass implements OnInit {
 
   // init subscriptions list
   subscriptions: Subscription[] = [];
-  @Input() userProfileAndBetcodes: UserProfileAndBetcodesInterface[] = [];
+  @Input() userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
   foundUserProfile: UserInterface;
   @Input() currentUser: UserInterface;
 
@@ -93,8 +93,12 @@ export class RaterComponent extends RateClass implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    // get user rating
+    super.userRating(this.userBetcodesAndProfile);
+
     // get found user
-    this.foundUserProfile = this.userProfileAndBetcodes[0].creator;
+    this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
     // set user followers
     this.followers = this.foundUserProfile.followers.length;
 

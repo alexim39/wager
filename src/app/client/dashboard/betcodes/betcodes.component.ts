@@ -163,7 +163,7 @@ import { BetcodesClass } from './betcodes.class';
             <th mat-header-cell *matHeaderCellDef> OWNER </th>
             <td matTooltip="View {{bet.creator.lastname | titlecase}}'s profile" (click)="loadUserProfile(bet.creator)" mat-cell *matCellDef="let bet"> 
               <img class="profile-img clickable" [src]="profileImg"/>
-              <div fxHide fxShow.gt-sm class="profile-name clickable">{{getOwner(bet.creator) | titlecase}}</div>
+              <div class="profile-name clickable">{{getOwner(bet.creator) | titlecase}}</div>
             </td>
           </ng-container>
 
@@ -292,6 +292,9 @@ export class BetcodesComponent extends BetcodesClass implements OnInit, OnDestro
     }
     if (bet.status === 'Not started') {
       return `Starting on ${formatDate(new Date(bet.startDate), dateFormat, locale)} by ${bet.startTime}`;
+    } 
+    if (bet.status === 'In progress') {
+      return `Ending on ${formatDate(new Date(bet.endDate), dateFormat, locale)} by ${bet.endTime}`;
     } else {
       return null;
     }

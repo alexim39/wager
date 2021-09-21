@@ -1,9 +1,11 @@
 import { UserInterface } from "src/app/core/user.service";
+import { UserBetcodesAndProfileInterface } from "../user-profile.service";
 
 export class RateClass {
 
     numberOfUpRate: number = 0;
     numberOfDownRate: number = 0;
+    rating: number = 0;
 
     constructor() {}
 
@@ -45,6 +47,21 @@ export class RateClass {
         } else {
             return false;
         }
+    }
+
+    userRating(userBetcodes: UserBetcodesAndProfileInterface[]) {
+        const wonbets: UserBetcodesAndProfileInterface[] = [];
+        //const losebets: UserBetcodesAndProfileInterface[] = [];
+
+        userBetcodes.forEach((bet) => {
+            if (bet.outcome === 'won') {
+                wonbets.push(bet)
+            }
+           /*  if (bet.outcome === 'lose') {
+                losebets.push(bet)
+            }  */           
+        })
+        this.rating = +((wonbets.length / userBetcodes.length) * 100).toFixed(0);
     }
 
     

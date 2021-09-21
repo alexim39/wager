@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { UserInterface } from 'src/app/core/user.service';
 
 
-export interface UserProfileAndBetcodesInterface {
+export interface UserBetcodesAndProfileInterface {
     _id: string;
     bookmaker: string;
     code: string;
