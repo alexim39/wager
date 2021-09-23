@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,12 +12,10 @@ import { RateClass } from './rater.class';
   selector: 'async-rater',
   styles: [`
     section {
+      margin-top: 1em;
       height: inherit;
       padding: 1em;
       border: 1px solid #ddd;
-      .current-rating {
-
-      }
       .followers {
         button {
           span {
@@ -44,7 +42,7 @@ import { RateClass } from './rater.class';
   `],
   template: `
     <section fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="space-between center" fxLayoutGap="1em">
-      <div class="current-rating">
+      <div>
         CURRENT RATING: {{rating}}%
       </div>
 
@@ -64,29 +62,28 @@ import { RateClass } from './rater.class';
           <mat-icon>thumb_down</mat-icon>
           <span>{{numberOfDownRate}}</span>
         </button>
-        <button (click)="loadReportPage()" mat-stroked-button matTooltip="Report user for abuse">
-          REPORT
+        <button [disabled]="isOwner" (click)="loadReportPage()" mat-stroked-button matTooltip="Report user for abuse">
+          REPORT <span>{{numberOfReports}}</span>
         </button>
       </div>
     </section>
   `
 })
-export class RaterComponent extends RateClass implements OnInit {
+export class RaterComponent extends RateClass implements OnInit, OnDestroy {
 
   // init subscriptions list
   subscriptions: Subscription[] = [];
   @Input() userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
   foundUserProfile: UserInterface;
   @Input() currentUser: UserInterface;
-
-  //upRates: number = 0;
-  //downRates: number = 0;
-  followers: number = 0;
+  isOwner: boolean = false;
 
   primary: string;
   warn: string;
+  followers: number = 0;
   isRatedUp: boolean;
   isRatedDwon: boolean;
+  numberOfReports: number = 0;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -107,6 +104,9 @@ export class RaterComponent extends RateClass implements OnInit {
     this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
     // set user followers
     this.followers = this.foundUserProfile.followers.length;
+
+    // set user for shareing with report component
+    this.reportService.setUser(this.foundUserProfile);
 
     // get user rating
     this.isRatedUp = super.ratedUp(this.foundUserProfile, this.currentUser._id);
@@ -133,8 +133,18 @@ export class RaterComponent extends RateClass implements OnInit {
       })
     )
 
-    // set user in report servie to be use in report component
-    //this.reportService.setUser(this.foundUserProfile)
+    // check if currentUser is foundUserProfile
+    if (this.foundUserProfile._id === this.currentUser._id) {
+      this.isOwner = true;
+    }
+
+    this.subscriptions.push(
+      this.reportService.getReports(this.foundUserProfile._id).subscribe((res) => {
+        if (res.code === 200) {
+         this.numberOfReports = res.obj.length;
+        }
+      })
+    )
     
   }
 
@@ -342,9 +352,15 @@ export class RaterComponent extends RateClass implements OnInit {
     }
   }
 
-
   loadReportPage() {
     this.router.navigateByUrl(`dashboard/${this.foundUserProfile.username}/report`);
+  }
+
+  ngOnDestroy() {
+    // unsubscribe list
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
   }
 
 }

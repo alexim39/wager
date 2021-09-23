@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserInterface } from 'src/app/core/user.service';
+import { UserBetcodesAndProfileInterface } from '../../user-profile.service';
 import { PredictionStatusClass } from '../prediction-status.class';
 
 @Component({
@@ -29,30 +32,75 @@ import { PredictionStatusClass } from '../prediction-status.class';
   `],
   template: `
     <div fxLayout="column" fxLayout.sm="column" fxLayoutGap="0.5em">
-      <div class="skill-bar" fxLayout="row" fxLayoutGap="0.5em" matTooltip="{{knowledgeLevel}}% risk level">
+      <div class="skill-bar" fxLayout="row" fxLayoutGap="0.5em" matTooltip="{{risklevel}}% risk level">
         <small>Low</small>
-        <mat-progress-bar mode="determinate" [value]="knowledgeLevel" [ngClass]="getBarColor()"></mat-progress-bar>
+        <mat-progress-bar mode="determinate" [value]="risklevel" [ngClass]="getBarColor()"></mat-progress-bar>
         <small>High</small>
-        <span class="value"> {{knowledgeLevel}}% </span>
+        <span class="value"> {{risklevel}}% </span>
       </div>
       <small class="status-title">Risk Level</small>
     </div>
   `
 })
-export class RiskLevelComponent extends PredictionStatusClass  implements OnInit {
+export class RiskLevelComponent extends PredictionStatusClass  implements OnInit, OnDestroy {
 
-  knowledgeLevel: number = 50;
+  subscriptions: Subscription[] = [];
+  risklevel: number = 0;
+  @Input() userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
+  foundUserProfile: UserInterface;
+  @Input() currentUser: UserInterface;
+  userBetOdds: Array<number> = [];
+  userBetOddsAboveStandard: Array<number> = [];
+
 
   constructor() { 
     super()
   }
 
   ngOnInit(): void {
-    console
+    // found user
+    this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
+    this.getUserBetOdds(this.userBetcodesAndProfile);
+  }
+
+  // get all user bet odds
+  private getUserBetOdds(userBetcodesAndProfile: UserBetcodesAndProfileInterface[]) {
+    userBetcodesAndProfile.forEach((userbetodds) => {
+      this.userBetOdds.push(+userbetodds.odd);
+    })
+
+    // set above standard odd
+    this.getUserBetOddsAboveStandard(this.userBetOdds)
+  }
+
+  // get all user bet odd above standard
+  private getUserBetOddsAboveStandard(userBetOdds: number[]) {
+    userBetOdds.forEach((userbetodds) => {
+      if (userbetodds > 2.50) {
+        this.userBetOddsAboveStandard.push(userbetodds);
+      }
+    })
+    // set risklevel
+    this.setRiskLevel()
+  }
+
+  private setRiskLevel(){
+    let totalSumOfOdds: number = 0;
+    this.userBetOddsAboveStandard.forEach((odds) => {
+      totalSumOfOdds = totalSumOfOdds + odds;
+    })
+    this.risklevel = +( totalSumOfOdds / (this.userBetcodesAndProfile.length) ).toFixed(0)
   }
 
   getBarColor () {
-    return super.getProgressBarWidth(this.knowledgeLevel)
+    return super.getProgressBarWidth(this.risklevel)
+  }
+
+  ngOnDestroy() {
+    // unsubscribe list
+    this.subscriptions.forEach(subscription => {
+        subscription.unsubscribe();
+    });
   }
 
 }

@@ -43,13 +43,10 @@ import { BetcodesClass } from './betcodes.class';
             cursor: pointer;
           }
           .profile-img {
-            display: block;
-            margin-top: 3px;
-            margin-left: 10px;
+            margin-top: 6px;
           }
           .profile-name{
-            display: block;
-            padding-top: 0.5em;
+            padding-top: 0.6em;
             font-size: 0.8em;
             color: gray;
           }
@@ -161,7 +158,7 @@ import { BetcodesClass } from './betcodes.class';
 
           <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef> OWNER </th>
-            <td matTooltip="View {{bet.creator.lastname | titlecase}}'s profile" (click)="loadUserProfile(bet.creator)" mat-cell *matCellDef="let bet"> 
+            <td matTooltip="View {{bet.creator.lastname | titlecase}}'s profile" (click)="loadUserProfile(bet.creator)" mat-cell *matCellDef="let bet" fxLayout="column" fxLayoutAlign="start start"> 
               <img class="profile-img clickable" [src]="profileImg"/>
               <div class="profile-name clickable">{{getOwner(bet.creator) | titlecase}}</div>
             </td>
@@ -295,6 +292,9 @@ export class BetcodesComponent extends BetcodesClass implements OnInit, OnDestro
     } 
     if (bet.status === 'In progress') {
       return `Ending on ${formatDate(new Date(bet.endDate), dateFormat, locale)} by ${bet.endTime}`;
+    }
+    if (bet.status === 'Starting today') {
+      return `Starting by ${bet.startTime}`;
     } else {
       return null;
     }

@@ -28,6 +28,12 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
         height: 5em;
         border-radius: 50%;
       }
+      h1 {
+        small {
+          font-size: 0.5em;
+          color: gray;
+        }
+      }
       p {
         color: gray;
         text-align: left;
@@ -55,9 +61,6 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
           float: right;
         }
       }
-    }
-    .content-area {
-      
     }
     .no-user-found {
         text-align: center;
@@ -90,14 +93,15 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
 
           <section class="profile-area" fxFlex="30" fxLayout="column" fxLayoutAlign="center center">
             <img class="profile-img clickable" [src]="profileImg"/>
-            <h1>{{foundUserProfile.lastname | titlecase }} {{foundUserProfile.firstname | titlecase }}</h1>
+            <h1>{{foundUserProfile.lastname | titlecase }} {{foundUserProfile.firstname | titlecase }} <small *ngIf="isOwner">(Your Profile) </small></h1>
             <p>
               {{foundUserProfile.about | sentencecase}}
             </p>
             <div class="btn" fxLayout="row" fxLayoutGap="1em">
               <button *ngIf="!isUserFollowing" mat-flat-button color="primary" (click)="follow(foundUserProfile._id)">FELLOW</button>
               <button *ngIf="isUserFollowing" mat-flat-button color="primary" (click)="unFollow(foundUserProfile._id)">UNFELLOW</button>
-              <button mat-stroked-button color="primary">MESSAGE</button>
+
+              <button [disabled]="isOwner" mat-stroked-button color="primary">MESSAGE</button>
             </div>
 
             <div class="line"><hr></div>
@@ -133,7 +137,7 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
 
           </section>
 
-          <section fxFlex="70" class="content-area" fxLayout="column" fxLayoutGap="1em">
+          <section fxFlex="70" fxLayout="column" fxLayoutGap="1em">
             <router-outlet></router-outlet>
           </section>
         </div>
@@ -154,6 +158,7 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
   foundUserProfile: UserInterface;
   currentUser: UserInterface;
   isUserFollowing: boolean = false;
+  isOwner: boolean = false;
 
   profileImg: string = "./assets/img/profile.jpg";
 
@@ -203,6 +208,11 @@ export class UserProfileComponent implements OnInit, OnDestroy  {
               this.userBetcodesAndProfile = res.obj;
               // get user profile
               this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
+
+              // check if currentUser is foundUserProfile
+              if (this.foundUserProfile._id === this.currentUser._id) {
+                this.isOwner = true;
+              }
 
               // check if user has already clicked fellow button
               this.foundUserProfile.followers.forEach((follower) => {

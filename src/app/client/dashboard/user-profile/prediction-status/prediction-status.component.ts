@@ -24,10 +24,10 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
   `],
   template: `
     <aside>
-      <h1>{{foundUserProfile.lastname | titlecase}}'s Prediction Status</h1>
+      <h1><span *ngIf="!isOwner">{{foundUserProfile.lastname | titlecase}}'s</span> <span *ngIf="isOwner">Your Current</span> Prediction Status</h1>
       <section fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="0.5em">
 
-        <div fxFlex><async-risk-level></async-risk-level></div>
+        <div fxFlex><async-risk-level [userBetcodesAndProfile]="userBetcodesAndProfile" [currentUser]="currentUser"></async-risk-level></div>
 
         <div fxFlex fxLayout="column" fxLayout.sm="column" fxLayoutGap="0.5em">
           <canvas baseChart 
@@ -41,7 +41,7 @@ import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsToolt
           <small class="status-title">Win/Lose percentage</small>
         </div>
 
-        <div fxFlex><async-sport-knowledge></async-sport-knowledge></div>
+        <div fxFlex><async-sport-knowledge [userBetcodesAndProfile]="userBetcodesAndProfile" [currentUser]="currentUser"></async-sport-knowledge></div>
       </section>
     </aside>
 
@@ -58,6 +58,7 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
   winnings: number = 0;
   loses: number = 0;
   otheroutcomes: number = 0;
+  isOwner: boolean = false;
 
   // Pie
   pieChartOptions: ChartOptions = {
@@ -93,6 +94,11 @@ export class PredictionStatusComponent extends PredictionStatusClass implements 
 
     // found user
     this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
+
+    // check if currentUser is foundUserProfile
+    if (this.foundUserProfile._id === this.currentUser._id) {
+      this.isOwner = true;
+    }
   }
 
 }

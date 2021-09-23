@@ -67,8 +67,8 @@ export class TabService {
     // return throwError(`Something went wrong, please try again.`)
   }
 
-  getMatchesBySeason(seasonId: number): Observable<any> {
-    return this.http.get<any>(`https://app.sportdataapi.com/api/v1/soccer/matches?apikey=8c911390-0b3a-11ec-9c99-db1e436dc701&season_id=${seasonId}`, {headers:{skip:"true"}})
+  getMatchesBySeason(seasonId: number, statusCode: number = 0): Observable<any> {
+    return this.http.get<any>(`https://app.sportdataapi.com/api/v1/soccer/matches?apikey=8c911390-0b3a-11ec-9c99-db1e436dc701&season_id=${seasonId}&status_code=${statusCode}`, {headers:{skip:"true"}})
       .pipe(
         retry(2), // retry a failed request up to 2 times
         catchError(this.handleError)

@@ -38,13 +38,13 @@ import { AuthComponent } from '../../../auth/auth.component';
       <div fxHide fxShow.gt-xs>
         <span>Bet Analytics</span> 
         <span>Bet Codes</span>
-        <span> Bet Investment</span>
+        <!-- <span> Bet Investment</span> -->
       </div>
       <!-- Mobile -->
       <div fxHide fxShow.lt-sm>
         <span>Analytics</span> 
         <span>Codes</span>
-        <span>Investment</span>
+        <!-- <span>Investment</span> -->
       </div>
 
       <h1>We believe you can accumulate wealth by gradual process through betting and we only exist because we want you to win</h1>

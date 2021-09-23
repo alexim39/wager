@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserInterface } from 'src/app/core/user.service';
+import { UserBetcodesAndProfileInterface } from '../../user-profile.service';
 import { PredictionStatusClass } from '../prediction-status.class';
 
 @Component({
@@ -39,20 +42,52 @@ import { PredictionStatusClass } from '../prediction-status.class';
     </div>
   `
 })
-export class SportKnowledgeComponent extends PredictionStatusClass implements OnInit {
+export class SportKnowledgeComponent extends PredictionStatusClass implements OnInit, OnDestroy {
 
-  knowledgeLevel: number = 50;
+  subscriptions: Subscription[] = [];
+  knowledgeLevel: number = 0;
+  @Input() userBetcodesAndProfile: UserBetcodesAndProfileInterface[] = [];
+  foundUserProfile: UserInterface;
+  @Input() currentUser: UserInterface;
+  followers: number = 0;
+  winningValue: number = 0;
+
 
   constructor() { 
     super()
   }
 
   ngOnInit(): void {
-    console
+    // found user
+    this.foundUserProfile = this.userBetcodesAndProfile[0].creator;
+    // user winning value
+    this.winningValue = super.userWins(this.userBetcodesAndProfile);
+    // set user followers
+    this.followers = this.foundUserProfile.followers.length;
+
+    //knwowledge
+    this.setKnowledge()
   }
+
+
+  /* 
+    Algo:
+    (winnings + followers) / 2 * 100
+  */
+  private setKnowledge(): void {
+    this.knowledgeLevel = +( (this.winningValue/2) + (this.followers/2) ).toFixed(0);
+  }
+
 
   getBarColor () {
     return super.getProgressBarWidth(this.knowledgeLevel)
+  }
+
+  ngOnDestroy() {
+    // unsubscribe list
+    this.subscriptions.forEach(subscription => {
+        subscription.unsubscribe();
+    });
   }
 
 }
