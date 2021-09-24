@@ -36,8 +36,8 @@ import { AuthComponent } from '../../../auth/auth.component';
     <aside class="video" fxLayout="column" fxLayoutAlign="center center">
       <!-- Desktop -->
       <div fxHide fxShow.gt-xs>
-        <span>Bet Analytics</span> 
-        <span>Bet Codes</span>
+        <span>Betting Analytics</span> 
+        <span>Betting Codes</span>
         <!-- <span> Bet Investment</span> -->
       </div>
       <!-- Mobile -->

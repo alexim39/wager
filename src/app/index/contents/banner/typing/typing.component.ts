@@ -49,8 +49,8 @@ export class TypingComponent implements OnInit, AfterViewInit {
   @ViewChild("blinkElement") blinkElement: ElementRef;
   @Input() wordArray: string[] = [
     " You get free bet analytics tools to analyse your bets.    ",
-    " You get free bet codes analysed with our system.     ",
-    " You get options to invest the bet and grow your money everyday.     ",
+    " You get or share betslips with friends in the betting community.     ",
+    //" You get options to invest the bet and grow your money everyday.     ",
     //" Get help with accademic work from fellow students.     ",
     //" Get links to helpful  academic resources.     ",
     //" Get links to income generating resources.     ",

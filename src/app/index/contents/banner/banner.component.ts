@@ -57,11 +57,11 @@ import { AuthComponent } from '../../../auth/auth.component';
           <article fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3em">
             <!-- Desktop -->
             <h1 class="mat-display-1" fxHide fxShow.gt-xs>
-              Get your bets analysed, get betting codes <br> or <br> Investing your bet is an option. 
+              Get your bets analysed <br> Or <br> Share your betslip with friends in betting community. 
             </h1>
             <!-- Mobile -->
             <h1 fxHide fxShow.lt-sm>
-              Analyse your bets, get bet codes <br> or <br> invest your bets.
+              Analyse your bets <br> Or <br> Share your betslip with friends.
             </h1>
 
             <h3 class="typing">
