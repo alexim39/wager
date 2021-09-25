@@ -167,7 +167,7 @@ import { BetcodesClass } from './betcodes.class';
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row [ngClass]="{ 'won': wonBet(bet.outcome), 'lose': losedBet(bet.outcome), 'expired': expiredBet(bet.status) }" *matRowDef="let bet; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[20, 45, 60, 100]"></mat-paginator>
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[10, 20, 45, 60, 100]"></mat-paginator>
       </section>
     </aside>
 

@@ -20,6 +20,7 @@ import { FeedbackModule } from './dashboard/feedback/feedback.module';
 import { BoxMenuModule } from './dashboard/home/box-menu/box-menu.module';
 import { BetcodesModule } from './dashboard/betcodes/betcodes.module';
 import { UserProfileModule } from './dashboard/user-profile/user-profile.module';
+import { RefererModule } from './dashboard/referer/referer.module';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { UserProfileModule } from './dashboard/user-profile/user-profile.module'
     FeedbackModule,
     BoxMenuModule,
     BetcodesModule,
-    UserProfileModule
+    UserProfileModule,
+    RefererModule
   ],
   providers: []
 })

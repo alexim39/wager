@@ -11,6 +11,7 @@ import { FeedbackComponent } from './dashboard/feedback/feedback.component';
 import { YearlyGraphComponent } from './dashboard/home/box-menu/yearly-graph/yearly-graph.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { ProfileDetailsComponent } from './dashboard/profile/profile-details/profile-details.component';
+import { RefererComponent } from './dashboard/referer/referer.component';
 import { PasswordComponent } from './dashboard/security/password/password.component';
 import { SecurityComponent } from './dashboard/security/security.component';
 import { SystemPredictionComponent } from './dashboard/system-prediction/system-prediction.component';
@@ -42,12 +43,14 @@ const routes: Routes = [
       },
       { path: 'feedback', component: FeedbackComponent, data: {title: 'User feedback'} },
       { path: 'yearly-progress-graph', component: YearlyGraphComponent, data: {title: 'Weekly prediction yearly graph'} },
+      { path: 'referer', component: RefererComponent, data: {title: 'Friend referer page'} },
+      /* The uri should alwayb be the last */
       { path: ':username', component: UserProfileComponent, data: {title: 'User profile page'},
         children: [
           { path: '', component: UserProfileHomeComponent },
           { path: 'report', component: ReportComponent, data: {title: 'User behaviour report page'} },
         ]
-      },
+      }
     ]
   }
 ];

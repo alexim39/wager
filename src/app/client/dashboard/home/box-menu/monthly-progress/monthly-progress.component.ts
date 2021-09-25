@@ -69,7 +69,7 @@ import { MonthlyProgressClass } from './monthly-progress.class';
   template: `
     <mat-card fxLayout="column" fxLayoutAlign="space-around center">
       <mat-card-content fxLayoutAlign="center center" fxLayoutGap="1.5rem">
-        <mat-icon>show_chart</mat-icon>
+        <mat-icon>leaderboard</mat-icon>
         <span class="win"> {{monthlyWin}}% Win</span>
         <span class="lose"> <span fxHide fxShow.gt-xs>|</span> {{monthlyLose}}% Lose</span>
         <span class="other-outcome"> <span fxHide fxShow.gt-xs>|</span> {{monthlyOtherOutcomes}}% <span fxHide fxShow.gt-sm>Others</span> (Pending)</span> 

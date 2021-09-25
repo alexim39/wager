@@ -55,6 +55,9 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
       <a mat-menu-item (click)="toggle()" [routerLink]="['/dashboard/feedback']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
         <mat-icon>feedback</mat-icon> Submit a feedback
       </a>
+      <a mat-menu-item (click)="toggle()" [routerLink]="['/dashboard/referer']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> 
+        <mat-icon>supervisor_account</mat-icon> Invite a friend
+      </a>
 
     </mat-nav-list>
   `,
