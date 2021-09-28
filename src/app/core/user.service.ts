@@ -20,6 +20,7 @@ export interface UserInterface {
     followers?: UserInterface[];
     ratedowns?: UserInterface[];
     rateups?: UserInterface[];
+    referer?: string;
 }
 
 const httpOptions = {

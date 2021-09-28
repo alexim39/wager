@@ -12,6 +12,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { ActivationComponent } from './activation/activation.component';
 import { AuthService } from './auth.service';
+import { RefSignupComponent } from './ref-signup/ref-signup.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AuthService } from './auth.service';
     SigninComponent,
     ForgotPasswordComponent,
     NewPasswordComponent,
-    ActivationComponent
+    ActivationComponent,
+    RefSignupComponent
   ],
   imports: [
     CommonModule,

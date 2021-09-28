@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ActivationComponent } from '../auth/activation/activation.component';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
 import { NewPasswordComponent } from '../auth/new-password/new-password.component';
+import { RefSignupComponent } from '../auth/ref-signup/ref-signup.component';
 import { SigninComponent } from '../auth/signin/signin.component';
 import { ContentsComponent } from './contents/contents.component';
 import { AboutAppComponent } from './firm/about-app/about-app-dialog.component';
@@ -35,6 +36,7 @@ const routes: Routes = [
       },
       { path: 'signin', component: SigninComponent, data: {title: 'Account signin'}  },
       { path: 'signup/:userId', component: ActivationComponent, data: {title: 'Account activation'}  },
+      { path: 'signup/r/:userId', component: RefSignupComponent, data: {title: 'User account sign up - referer'}  },
       { path: 'fp', component: ForgotPasswordComponent, data: {title: 'Reset your account password'} },
       { path: 'new-password/:userId', component: NewPasswordComponent, data: {title: 'New account password'}  },     
     ]

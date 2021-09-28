@@ -77,8 +77,8 @@ import { UserBetcodesAndProfileInterface, UserProfileService } from './user-prof
         <li>
           <a [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Dashboard</a>
         </li>
-        <li>User profile</li>
-        <li>{{username | lowercase}} <!-- {{user.lastname | titlecase}} {{user.firstname | titlecase}} --></li>
+        <a [routerLink]="['/dashboard/betcodes']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Betcodes</a>
+        <li>{{username | lowercase}}</li>
       </ul>
     </div>
 

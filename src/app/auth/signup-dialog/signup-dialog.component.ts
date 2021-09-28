@@ -26,7 +26,7 @@ export class SignupDialogComponent implements OnInit, OnDestroy {
     private thisDialogRef: MatDialogRef<AuthComponent>,
     private snackBar: MatSnackBar,
     private router: Router,
-    private auth: AuthService) { }
+    private authService: AuthService) { }
 
   onSignUp(formObject: SignUpInterface): void {
     this.isSpinning = true;
@@ -34,7 +34,7 @@ export class SignupDialogComponent implements OnInit, OnDestroy {
     // push into list
     this.subscriptions.push(
 
-      this.auth.signUp(formObject).subscribe((res: ServerResponse) => {
+      this.authService.signUp(formObject).subscribe((res: ServerResponse) => {
 
         if (res.code === 200) {
           this.snackBar.open(`${res.msg}`, `Close`, {

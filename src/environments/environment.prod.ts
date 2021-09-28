@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API_DOMAIN: 'https://betanalitics.herokuapp.com'
+  API_DOMAIN: 'https://wagjer.herokuapp.com'
 };

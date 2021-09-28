@@ -7,11 +7,14 @@ import { MaterialModule } from './../../../common/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RefererService } from './referer.service';
+//import { RefSignupComponent } from './ref-signup/ref-signup.component';
 
 
 @NgModule({
   declarations: [
-    RefererComponent
+    RefererComponent,
+    //RefSignupComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,6 @@ import { FormsModule } from '@angular/forms';
   exports: [
     RefererComponent
   ],
-  providers: []
+  providers: [RefererService]
 })
 export class RefererModule { }

@@ -11,6 +11,7 @@ export interface SignUpInterface {
   email: string;
   password: string;
   tnc: boolean;
+  referer?: string;
 }
 
 export interface SignInInterface {

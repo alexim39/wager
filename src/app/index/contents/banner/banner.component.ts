@@ -70,7 +70,7 @@ import { AuthComponent } from '../../../auth/auth.component';
 
             <div class="btn">
               <a (click)="openAuthComponent()" mat-raised-button color="accent">GET ACCOUNT</a>
-              <a mat-raised-button color="accent" href="#odd-analyser">TRY NOW FOR FREE</a>
+              <a mat-raised-button color="accent" href="#analyser">TRY NOW FOR FREE</a>
             </div>
           </article>
 
