@@ -50,8 +50,8 @@ import { AuthComponent } from '../../../auth/auth.component';
     <section fxLayout="row" fxLayoutAlign="center center">
       <header fxFill>
         <aside>
-          <video autoplay muted loop poster="../../../../assets/img/bck.png">
-            <source src="../../../../assets/video/bck1.webm" type="video/webm">
+          <video autoplay muted loop [poster]="posterSource">
+            <source [src]="videoSource" type="video/webm">
           </video>
 
           <article fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3em">
@@ -80,6 +80,9 @@ import { AuthComponent } from '../../../auth/auth.component';
   `
 })
 export class BannerComponent {
+
+  posterSource: string = 'assets/img/bck.png';
+  videoSource: string = 'assets/video/bck1.webm';
 
   constructor(
     public dialog: MatDialog

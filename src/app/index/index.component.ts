@@ -18,16 +18,16 @@ import { Subscription } from 'rxjs'
   </div>  `,
   styles: [`
   #page-wrap {
-    display: flex; 
+    display: flex;
     flex-direction: column;
-    height: 100vh; 
+    height: 100vh;
     margin: 0;
   }
   #content-wrap {}
   #footer-wrap {
     margin-top: auto;
   }
-  
+
   @media only screen and (max-width:800px) {
     #footer-wrap {
       font-size: 0.9em
